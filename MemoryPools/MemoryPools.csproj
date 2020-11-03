@@ -1,0 +1,69 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
+        <RootNamespace>DevTools.MemoryPools</RootNamespace>
+        <Authors>Stanislav Sidristy</Authors>
+        <LangVersion>8.0</LangVersion>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="System.Memory" Version="4.5.4" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Collections\Specialized\PoolingNodeRef.cs">
+        <DependentUpon>PoolingNode.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Collections\Specialized\PoolingNodeVal.cs">
+        <DependentUpon>PoolingNode.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Collections\Specialized\IPoolingNode.cs">
+        <DependentUpon>PoolingNode.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Collections\Specialized\PoolingQueueRef.cs">
+        <DependentUpon>PoolingQueue.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Collections\Specialized\PoolingQueueVal.cs">
+        <DependentUpon>PoolingQueue.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Collections\Specialized\PoolingStackRef.cs">
+        <DependentUpon>PoolingStack.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Collections\Specialized\PoolingStackVal.cs">
+        <DependentUpon>PoolingStack.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Collections\Specialized\PoolingListRef.cs">
+        <DependentUpon>PoolingList.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Collections\Specialized\PoolingListVal.cs">
+        <DependentUpon>PoolingList.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Collections\Specialized\PoolingDictionary.KeysCollection.cs">
+        <DependentUpon>PoolingDictionary.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Collections\Specialized\PoolingDictionary.ValuesCollection.cs">
+        <DependentUpon>PoolingDictionary.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Collections\Specialized\AsSingleQueryList.EnumerableRef.cs">
+        <DependentUpon>PoolingList.SingleQuery.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Collections\Specialized\AsSingleQueryList.EnumerableVal.cs">
+        <DependentUpon>PoolingList.SingleQuery.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Collections\Linq\Where.WithContextEnumerable.cs">
+        <DependentUpon>Where.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Collections\Linq\Where.Enumerable.cs">
+        <DependentUpon>Where.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Collections\Linq\Select.Enumerable.cs">
+        <DependentUpon>Select.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Collections\Linq\Select.WithContextEnumerable.cs">
+        <DependentUpon>Select.cs</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
+</Project>
