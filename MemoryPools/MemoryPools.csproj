@@ -3,7 +3,6 @@
     <PropertyGroup>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
-        <RootNamespace>DevTools.MemoryPools</RootNamespace>
         <Authors>Stanislav Sidristy</Authors>
         <LangVersion>8.0</LangVersion>
     </PropertyGroup>

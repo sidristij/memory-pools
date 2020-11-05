@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using MemoryPools.Collections;
 using MemoryPools.Collections.Linq;
@@ -10,6 +12,7 @@ namespace Demo
     {
         static void Main(string[] args)
         {
+            var list = new List<T>();
             var list1 = new PoolingListVal<int>();
             var list2 = new PoolingListVal<int>();
             for (var i = 0; i < 10; i++)
@@ -17,7 +20,7 @@ namespace Demo
                 list1.Add(i*2);
                 if(i < 6) list2.Add(i*2+1);
             }
-
+list.Aggregate()
             // while (!Console.KeyAvailable)
             foreach (var tuple in list1.AsPooling().Union(list2.AsPooling()))
             {
