@@ -66,7 +66,9 @@ namespace MemoryPools.Collections.Linq
     			_src.Reset();
     		}
 
-    		public T Current => _src.Current;
+            object IPoolingEnumerator.Current => Current;
+
+            public T Current => _src.Current;
     
     		public void Dispose()
     		{
@@ -76,5 +78,10 @@ namespace MemoryPools.Collections.Linq
     			Pool.Return(this);
     		}
     	}
-    }
+
+        IPoolingEnumerator IPoolingEnumerable.GetEnumerator()
+        {
+	        return GetEnumerator();
+        }
+	}
 }

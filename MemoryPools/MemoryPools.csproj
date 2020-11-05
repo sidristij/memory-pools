@@ -64,6 +64,12 @@
       <Compile Update="Collections\Linq\Select.WithContextEnumerable.cs">
         <DependentUpon>Select.cs</DependentUpon>
       </Compile>
+      <Compile Update="Collections\Linq\Cast.Enumerable.cs">
+        <DependentUpon>Cast.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Collections\Linq\OfType.Enumerable.cs">
+        <DependentUpon>OfType.cs</DependentUpon>
+      </Compile>
     </ItemGroup>
 
 </Project>

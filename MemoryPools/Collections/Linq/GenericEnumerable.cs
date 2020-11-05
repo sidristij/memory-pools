@@ -20,6 +20,11 @@ namespace MemoryPools.Collections.Linq
 			Pool.Return(this);
 			return Pool.Get<GenericPoolingEnumerator<T>>().Init(enumerator);
 		}
+
+		IPoolingEnumerator IPoolingEnumerable.GetEnumerator()
+		{
+			return GetEnumerator();
+		}
 	}
 	internal class GenericEnumerable<T> : IEnumerable<T>
 	{

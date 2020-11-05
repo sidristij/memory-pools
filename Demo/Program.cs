@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using MemoryPools.Collections.Linq;
 using MemoryPools.Collections.Specialized;
 
@@ -13,11 +14,11 @@ namespace Demo
             {
                 list.Add(i);
             }
-
+            
             while (!Console.KeyAvailable)
-            foreach (var num in list.AsPooling().Where(x=> (x & 1) == 1))
+            foreach (var num in list.AsPooling().Where(x=> (x & 1) == 1).Cast<object>().OfType<int>())
             {
-                
+                Console.WriteLine(num);
             }
         }
     }

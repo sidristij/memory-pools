@@ -44,6 +44,8 @@ namespace MemoryPools.Collections.Linq
 				_src.Reset();
 			}
 
+			object IPoolingEnumerator.Current => Current;
+
 			public TR Current => _mutator( _src.Current);
 
 			public void Dispose()
@@ -52,6 +54,11 @@ namespace MemoryPools.Collections.Linq
 				_src = default;
 				Pool.Return(this);
 			}
+		}
+
+		IPoolingEnumerator IPoolingEnumerable.GetEnumerator()
+		{
+			return GetEnumerator();
 		}
 	}
 }

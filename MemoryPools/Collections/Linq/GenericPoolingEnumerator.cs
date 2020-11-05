@@ -16,6 +16,8 @@ namespace MemoryPools.Collections.Linq
 		public bool MoveNext() => _source.MoveNext();
 
 		public void Reset() => _source.Reset();
+		
+		object IPoolingEnumerator.Current => Current;
 
 		public T Current => _source.Current;
     
