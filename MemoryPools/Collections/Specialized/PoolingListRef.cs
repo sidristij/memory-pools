@@ -11,7 +11,7 @@ namespace MemoryPools.Collections.Specialized
 	{
 		protected override IPoolingNode<T> CreateNodeHolder()
 		{
-			return (IPoolingNode<T>) Heap.Get<PoolingNodeRef<T>>().Init(PoolsDefaults.DefaultPoolBucketSize);
+			return (IPoolingNode<T>) Pool.Get<PoolingNodeRef<T>>().Init(PoolsDefaults.DefaultPoolBucketSize);
 		}
 	}
 }

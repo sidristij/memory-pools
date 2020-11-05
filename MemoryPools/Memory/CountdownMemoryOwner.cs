@@ -56,7 +56,7 @@ namespace MemoryPools.Memory
 			{
 				_parent.Dispose();
 				_parent = null;
-				Heap.Return(this);
+				Pool.Return(this);
 			}
 			else if (owners < 0)
 			{

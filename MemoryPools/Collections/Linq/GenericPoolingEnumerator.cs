@@ -23,7 +23,7 @@ namespace MemoryPools.Collections.Linq
 		{
 			_source.Dispose();
 			_source = default;
-			Heap.Return(this);
+			Pool.Return(this);
 		}
 	}
 
@@ -49,7 +49,7 @@ namespace MemoryPools.Collections.Linq
 		{
 			_source.Dispose();
 			_source = default;
-			Heap.Return(this);
+			Pool.Return(this);
 		}
 	}
 }

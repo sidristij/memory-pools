@@ -218,7 +218,7 @@ namespace MemoryPools.Collections.Specialized
         }
 
         public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator() => 
-            Heap.Get<Enumerator>().Init(this);
+            Pool.Get<Enumerator>().Init(this);
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
@@ -321,7 +321,7 @@ namespace MemoryPools.Collections.Specialized
 
             public void Dispose()
             {
-                Heap.Return(this);
+                Pool.Return(this);
             }
         }
     }

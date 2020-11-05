@@ -18,8 +18,8 @@ namespace MemoryPools.Collections.Linq
 		{
 			var (condition, src) = (_condition: _mutator, _src);
 			(_mutator, _src) = (default, default);
-			Heap.Return(this);
-			return Heap.Get<SelectClauseEnumerator>().Init(src.GetEnumerator(), condition);
+			Pool.Return(this);
+			return Pool.Get<SelectClauseEnumerator>().Init(src.GetEnumerator(), condition);
 		}
 
 		internal class SelectClauseEnumerator : IPoolingEnumerator<TR>
@@ -50,7 +50,7 @@ namespace MemoryPools.Collections.Linq
 			{
 				_src.Dispose();
 				_src = default;
-				Heap.Return(this);
+				Pool.Return(this);
 			}
 		}
 	}

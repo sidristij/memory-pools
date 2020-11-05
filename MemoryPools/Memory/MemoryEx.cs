@@ -15,21 +15,21 @@ namespace MemoryPools.Memory
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static CountdownMemoryOwner<T> AsCountdown<T>(this IMemoryOwner<T> that, bool noDefaultOwner = false)
 		{
-			return Heap.Get<CountdownMemoryOwner<T>>().Init(that, 0, that.Memory.Length, noDefaultOwner);
+			return Pool.Get<CountdownMemoryOwner<T>>().Init(that, 0, that.Memory.Length, noDefaultOwner);
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static CountdownMemoryOwner<T> AsCountdown<T>(this IMemoryOwner<T> that, int offset,
 			bool noDefaultOwner = false)
 		{
-			return Heap.Get<CountdownMemoryOwner<T>>().Init(that, offset, that.Memory.Length - offset, noDefaultOwner);
+			return Pool.Get<CountdownMemoryOwner<T>>().Init(that, offset, that.Memory.Length - offset, noDefaultOwner);
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static CountdownMemoryOwner<T> AsCountdown<T>(this IMemoryOwner<T> that, int offset, int length,
 			bool noDefaultOwner = false)
 		{
-			return Heap.Get<CountdownMemoryOwner<T>>().Init(that, offset, length, noDefaultOwner);
+			return Pool.Get<CountdownMemoryOwner<T>>().Init(that, offset, length, noDefaultOwner);
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]

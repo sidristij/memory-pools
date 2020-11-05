@@ -15,7 +15,7 @@ namespace MemoryPools.Collections.Specialized
 		/// </summary>
 		public TPoolingList Init()
 		{
-			_root = Heap.GetBuffer<IPoolingNode<T>>(PoolsDefaults.DefaultPoolBucketSize);
+			_root = Pool.GetBuffer<IPoolingNode<T>>(PoolsDefaults.DefaultPoolBucketSize);
 			_ver = 0;
 			return (TPoolingList)this;
 		}
@@ -29,7 +29,7 @@ namespace MemoryPools.Collections.Specialized
 
 		public IEnumerator<T> GetEnumerator()
 		{
-			return Heap.Get<Enumerator>().Init(this);
+			return Pool.Get<Enumerator>().Init(this);
 		}
 
 		IEnumerator IEnumerable.GetEnumerator()
@@ -325,7 +325,7 @@ namespace MemoryPools.Collections.Specialized
 
 			public void Dispose()
 			{
-				Heap.Return(this);
+				Pool.Return(this);
 			}
 		}
 	}

@@ -20,8 +20,8 @@ namespace MemoryPools.Collections.Specialized
 			{
 				var src = _src;
 				_src = default;
-				Heap.Return(this);
-				return Heap.Get<EnumeratorVal>().Init(src);
+				Pool.Return(this);
+				return Pool.Get<EnumeratorVal>().Init(src);
 			}
 
 			IEnumerator IEnumerable.GetEnumerator()
@@ -57,8 +57,8 @@ namespace MemoryPools.Collections.Specialized
 				{
 					_enumerator?.Dispose();
 					_src?.Dispose();
-					Heap.Return(_src);
-					Heap.Return(this);
+					Pool.Return(_src);
+					Pool.Return(this);
 					_src = default;
 				}
 			}

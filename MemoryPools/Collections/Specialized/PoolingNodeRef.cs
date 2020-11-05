@@ -25,13 +25,13 @@ namespace MemoryPools.Collections.Specialized
 		public override void Dispose()
 		{
 			base.Dispose();
-			Heap.Return(this);
+			Pool.Return(this);
 		}
 
 		public override IPoolingNode<object> Init(int capacity)
 		{
 			Next = null;
-			_buf = Heap.GetBuffer<object>(capacity);
+			_buf = Pool.GetBuffer<object>(capacity);
 			return this;
 		}
 	}

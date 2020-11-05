@@ -4,7 +4,7 @@
 	{
 		protected override IPoolingNode<T> CreateNodeHolder()
 		{
-			return Heap.Get<PoolingNodeVal<T>>().Init(PoolsDefaults.DefaultPoolBucketSize);
+			return Pool.Get<PoolingNodeVal<T>>().Init(PoolsDefaults.DefaultPoolBucketSize);
 		}
 	}
 }

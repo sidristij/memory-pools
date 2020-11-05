@@ -21,8 +21,8 @@ namespace MemoryPools.Collections.Linq
 		{
 			var (condition, context, src) = (_condition, _context, _src);
 			(_condition, _context, _src) = (default, default, default);
-			Heap.Return(this);
-			return Heap.Get<SelectClauseWithContextEnumerator>().Init(src.GetEnumerator(), context, condition);
+			Pool.Return(this);
+			return Pool.Get<SelectClauseWithContextEnumerator>().Init(src.GetEnumerator(), context, condition);
 		}
 
 		internal class SelectClauseWithContextEnumerator : IPoolingEnumerator<TR>
@@ -50,7 +50,7 @@ namespace MemoryPools.Collections.Linq
 				_src.Dispose();
 				_src = default;
 				_context = default;
-				Heap.Return(this);
+				Pool.Return(this);
 			}
 		}
 	}

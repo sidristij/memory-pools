@@ -5,13 +5,13 @@
 		public override void Dispose()
 		{
 			base.Dispose();
-			Heap.Return(this);
+			Pool.Return(this);
 		}
 
 		public override IPoolingNode<T> Init(int capacity)
 		{
 			Next = null;
-			_buf = Heap.GetBuffer<T>(capacity);
+			_buf = Pool.GetBuffer<T>(capacity);
 			return this;
 		}
 	}

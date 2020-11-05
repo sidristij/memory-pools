@@ -17,8 +17,8 @@ namespace MemoryPools.Collections.Linq
 		{
 			var enumerator = _enumerable.GetEnumerator();
 			_enumerable = default;
-			Heap.Return(this);
-			return Heap.Get<GenericPoolingEnumerator<T>>().Init(enumerator);
+			Pool.Return(this);
+			return Pool.Get<GenericPoolingEnumerator<T>>().Init(enumerator);
 		}
 	}
 	internal class GenericEnumerable<T> : IEnumerable<T>
@@ -35,8 +35,8 @@ namespace MemoryPools.Collections.Linq
 		{
 			var enumerator = _enumerable.GetEnumerator();
 			_enumerable = default;
-			Heap.Return(this);
-			return Heap.Get<GenericEnumerator<T>>().Init(enumerator);
+			Pool.Return(this);
+			return Pool.Get<GenericEnumerator<T>>().Init(enumerator);
 		}
 
 		IEnumerator IEnumerable.GetEnumerator()

@@ -44,7 +44,7 @@ namespace MemoryPools.Memory.Pooling
 
 		public override IMemoryOwner<T> Rent(int minBufferSize = -1)
 		{
-			return Heap.Get<BufferHolder>().Init(_arraysPool.Rent(minBufferSize), this);
+			return Pool.Get<BufferHolder>().Init(_arraysPool.Rent(minBufferSize), this);
 		}
 
 		private class BufferHolder : IMemoryOwner<T>
@@ -57,7 +57,7 @@ namespace MemoryPools.Memory.Pooling
 				_that._arraysPool.Return(_arr);
 				_that = null;
 				_arr = null;
-				Heap.Return(this);
+				Pool.Return(this);
 			}
 
 			public Memory<T> Memory => _arr.AsMemory();

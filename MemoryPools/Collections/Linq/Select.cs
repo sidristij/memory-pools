@@ -6,12 +6,12 @@ namespace MemoryPools.Collections.Linq
 	{
 		public static IPoolingEnumerable<TR> Select<T, TR>(this IPoolingEnumerable<T> source, Func<T, TR> mutator)
 		{
-			return Heap.Get<SelectClauseEnumerable<T, TR>>().Init(source, mutator);
+			return Pool.Get<SelectClauseEnumerable<T, TR>>().Init(source, mutator);
 		}
 		
 		public static IPoolingEnumerable<TR> Select<T, TR, TContext>(this IPoolingEnumerable<T> source, TContext context, Func<TContext, T, TR> mutator) where TContext : struct
 		{
-			return Heap.Get<SelectClauseWithContextEnumerable<T, TR, TContext>>().Init(source, context, mutator);
+			return Pool.Get<SelectClauseWithContextEnumerable<T, TR, TContext>>().Init(source, context, mutator);
 		}
 	}
 }

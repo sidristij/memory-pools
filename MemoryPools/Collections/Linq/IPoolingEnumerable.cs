@@ -30,12 +30,12 @@ namespace MemoryPools.Collections.Linq
 	{
 		public static IPoolingEnumerable<T> AsPooling<T>(this IEnumerable<T> source)
 		{
-			return Heap.Get<GenericPoolingEnumerable<T>>().Init(source);
+			return Pool.Get<GenericPoolingEnumerable<T>>().Init(source);
 		}
 
 		public static IEnumerable<T> AsEnumerable<T>(this IPoolingEnumerable<T> source)
 		{
-			return Heap.Get<GenericEnumerable<T>>().Init(source);
+			return Pool.Get<GenericEnumerable<T>>().Init(source);
 		}
 	}
 }
