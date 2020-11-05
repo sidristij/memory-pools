@@ -8,21 +8,32 @@ namespace MemoryPools.Collections.Linq
 		private IPoolingEnumerable<T> _src;
 		private Func<TContext, T, TR> _condition;
 		private TContext _context;
+		private int _count;
 
 		public SelectExprWithContextEnumerable<T, TR, TContext> Init(IPoolingEnumerable<T> src, TContext context, Func<TContext, T, TR> condition)
 		{
 			_src = src;
+			_count = 0;
 			_context = context;
 			_condition = condition;
 			return this;
 		}
 
-		public IPoolingEnumerator<TR> GetEnumerator()
+		public IPoolingEnumerator<TR> GetEnumerator() => 
+			Pool.Get<SelectExprWithContextEnumerator>().Init(this, _src.GetEnumerator(), _context, _condition);
+
+		private void Dispose()
 		{
-			var (condition, context, src) = (_condition, _context, _src);
-			(_condition, _context, _src) = (default, default, default);
-			Pool.Return(this);
-			return Pool.Get<SelectExprWithContextEnumerator>().Init(src.GetEnumerator(), context, condition);
+			if (_count == 0) return;
+			_count--;
+			
+			if (_count == 0)
+			{
+				_src = default;
+				_context = default;
+				_condition = default;
+				Pool.Return(this);
+			}
 		}
 
 		internal class SelectExprWithContextEnumerator : IPoolingEnumerator<TR>
@@ -30,10 +41,16 @@ namespace MemoryPools.Collections.Linq
 			private TContext _context;
 			private Func<TContext, T, TR> _condition;
 			private IPoolingEnumerator<T> _src;
+			private SelectExprWithContextEnumerable<T, TR, TContext> _parent;
     
-			public SelectExprWithContextEnumerator Init(IPoolingEnumerator<T> src, TContext context, Func<TContext, T, TR> condition) 
+			public SelectExprWithContextEnumerator Init(
+				SelectExprWithContextEnumerable<T, TR, TContext> parent, 
+				IPoolingEnumerator<T> src, 
+				TContext context, 
+				Func<TContext, T, TR> condition) 
 			{
 				_src = src;
+				_parent = parent;
 				_context = context;
 				_condition = condition;
 				return this;
@@ -44,11 +61,13 @@ namespace MemoryPools.Collections.Linq
 			public void Reset() => _src.Reset();
 			object IPoolingEnumerator.Current => Current;
 
-			public TR Current =>  _condition(_context, _src.Current);
+			public TR Current => _condition(_context, _src.Current);
     
 			public void Dispose()
 			{
-				_src.Dispose();
+				_parent?.Dispose();
+				_parent = default;
+				_src?.Dispose();
 				_src = default;
 				_context = default;
 				Pool.Return(this);
