@@ -1,4 +1,4 @@
-﻿namespace MemoryPools.Collections.Linq
+﻿namespace MemoryPools.Collections
 {
     public interface IPoolingEnumerator<out T> : IPoolingEnumerator
     {

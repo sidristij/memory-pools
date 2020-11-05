@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MemoryPools.Collections.Linq
+namespace MemoryPools.Collections
 {
     public interface IPoolingEnumerator : IDisposable
     {

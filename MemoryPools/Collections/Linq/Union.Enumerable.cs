@@ -1,11 +1,11 @@
-﻿namespace MemoryPools.Collections
+﻿namespace MemoryPools.Collections.Linq
 {
-    internal class ZipExprEnumerable<T> : IPoolingEnumerable<(T, T)>
+    internal class UnionExprEnumerable<T> : IPoolingEnumerable<T>
     {
         private IPoolingEnumerable<T> _src, _second;
         private int _count;
 
-        public ZipExprEnumerable<T> Init(IPoolingEnumerable<T> src, IPoolingEnumerable<T> second)
+        public UnionExprEnumerable<T> Init(IPoolingEnumerable<T> src, IPoolingEnumerable<T> second)
         {
             _src = src;
             _count = 0;
@@ -13,10 +13,10 @@
             return this;
         }
 
-        public IPoolingEnumerator<(T, T)> GetEnumerator()
+        public IPoolingEnumerator<T> GetEnumerator()
         {
             _count++;
-            return Pool.Get<ZipExprEnumerator>().Init(this, _src.GetEnumerator(), _second.GetEnumerator());
+            return Pool.Get<UnionExprEnumerator>().Init(this, _src.GetEnumerator(), _second.GetEnumerator());
         }
 
         private void Dispose()
@@ -31,37 +31,47 @@
             }
         }
 
-        internal class ZipExprEnumerator : IPoolingEnumerator<(T, T)>
+        internal class UnionExprEnumerator : IPoolingEnumerator<T>
         {
-            private ZipExprEnumerable<T> _parent;
+            private UnionExprEnumerable<T> _parent;
             private IPoolingEnumerator<T> _src, _second;
-            private bool _hasResult;
+            private bool _first;
 
-            public ZipExprEnumerator Init(
-                ZipExprEnumerable<T> parent, IPoolingEnumerator<T> src, IPoolingEnumerator<T> second) 
+            public UnionExprEnumerator Init(
+                UnionExprEnumerable<T> parent, IPoolingEnumerator<T> src, IPoolingEnumerator<T> second) 
             {
                 _parent = parent;
                 _src = src;
                 _second = second;
-                _hasResult = false;
+                _first = true;
                 return this;
             }
 
             public bool MoveNext()
             {
-                _hasResult = _src.MoveNext() && _second.MoveNext();
-                return _hasResult;
+                if (_first)
+                {
+                    if (_src.MoveNext())
+                    {
+                        return true;
+                    }
+
+                    _first = false;
+                }
+
+                return _second.MoveNext();
             }
 
             public void Reset()
             {
+                _first = true;
                 _src.Reset();
                 _second.Reset();
             }
 
             object IPoolingEnumerator.Current => Current;
 
-            public (T, T) Current => _hasResult ? ( _src.Current, _second.Current) : default;
+            public T Current => _first ? _src.Current : _second.Current;
 
             public void Dispose()
             {

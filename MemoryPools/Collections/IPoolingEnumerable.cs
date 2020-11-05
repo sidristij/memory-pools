@@ -1,6 +1,7 @@
 using System.Collections.Generic;
+using MemoryPools.Collections.Linq;
 
-namespace MemoryPools.Collections.Linq
+namespace MemoryPools.Collections
 {
 	
 	public interface IPoolingEnumerable

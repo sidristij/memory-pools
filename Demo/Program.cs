@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using MemoryPools.Collections;
 using MemoryPools.Collections.Linq;
 using MemoryPools.Collections.Specialized;
 
@@ -17,10 +18,10 @@ namespace Demo
                 if(i < 6) list2.Add(i*2+1);
             }
 
-            while (!Console.KeyAvailable)
-            foreach (var tuple in list1.AsPooling().Zip(list2.AsPooling()))
+            // while (!Console.KeyAvailable)
+            foreach (var tuple in list1.AsPooling().Union(list2.AsPooling()))
             {
-                // Console.WriteLine($"{tuple.Item1} - {tuple.Item2}");
+                Console.WriteLine($"{tuple}");
             }
             // foreach (var num in list.AsPooling().Append(100).Prepend(100))
             // {
