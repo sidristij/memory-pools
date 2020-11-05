@@ -70,6 +70,12 @@
       <Compile Update="Collections\Linq\OfType.Enumerable.cs">
         <DependentUpon>OfType.cs</DependentUpon>
       </Compile>
+      <Compile Update="Collections\Linq\Prepend.Enumerable.cs">
+        <DependentUpon>AppendPrepend.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Collections\Linq\Append.Enumerable.cs">
+        <DependentUpon>AppendPrepend.cs</DependentUpon>
+      </Compile>
     </ItemGroup>
 
 </Project>

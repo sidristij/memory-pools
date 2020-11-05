@@ -3,13 +3,13 @@ using System;
 
 namespace MemoryPools.Collections.Linq
 {
-	internal class SelectClauseWithContextEnumerable<T, TR, TContext> : IPoolingEnumerable<TR> where TContext : struct
+	internal class SelectExprWithContextEnumerable<T, TR, TContext> : IPoolingEnumerable<TR> where TContext : struct
 	{
 		private IPoolingEnumerable<T> _src;
 		private Func<TContext, T, TR> _condition;
 		private TContext _context;
 
-		public SelectClauseWithContextEnumerable<T, TR, TContext> Init(IPoolingEnumerable<T> src, TContext context, Func<TContext, T, TR> condition)
+		public SelectExprWithContextEnumerable<T, TR, TContext> Init(IPoolingEnumerable<T> src, TContext context, Func<TContext, T, TR> condition)
 		{
 			_src = src;
 			_context = context;
@@ -22,16 +22,16 @@ namespace MemoryPools.Collections.Linq
 			var (condition, context, src) = (_condition, _context, _src);
 			(_condition, _context, _src) = (default, default, default);
 			Pool.Return(this);
-			return Pool.Get<SelectClauseWithContextEnumerator>().Init(src.GetEnumerator(), context, condition);
+			return Pool.Get<SelectExprWithContextEnumerator>().Init(src.GetEnumerator(), context, condition);
 		}
 
-		internal class SelectClauseWithContextEnumerator : IPoolingEnumerator<TR>
+		internal class SelectExprWithContextEnumerator : IPoolingEnumerator<TR>
 		{
 			private TContext _context;
 			private Func<TContext, T, TR> _condition;
 			private IPoolingEnumerator<T> _src;
     
-			public SelectClauseWithContextEnumerator Init(IPoolingEnumerator<T> src, TContext context, Func<TContext, T, TR> condition) 
+			public SelectExprWithContextEnumerator Init(IPoolingEnumerator<T> src, TContext context, Func<TContext, T, TR> condition) 
 			{
 				_src = src;
 				_context = context;

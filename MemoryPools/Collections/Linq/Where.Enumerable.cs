@@ -2,13 +2,13 @@ using System;
 
 namespace MemoryPools.Collections.Linq
 {
-	internal class WhereClauseEnumerable<T> : IPoolingEnumerable<T>
+	internal class WhereExprEnumerable<T> : IPoolingEnumerable<T>
 	{
 		private int _count;
     	private IPoolingEnumerable<T> _src;
     	private Func<T, bool> _condition;
 
-    	public WhereClauseEnumerable<T> Init(IPoolingEnumerable<T> src, Func<T, bool> condition)
+    	public WhereExprEnumerable<T> Init(IPoolingEnumerable<T> src, Func<T, bool> condition)
         {
 	        _count = 0;
     		_src = src;
@@ -19,7 +19,7 @@ namespace MemoryPools.Collections.Linq
     	public IPoolingEnumerator<T> GetEnumerator()
         {
 	        _count++;
-    		return Pool.Get<WhereClauseEnumerator>().Init(_src.GetEnumerator(), this, _condition);
+    		return Pool.Get<WhereExprEnumerator>().Init(_src.GetEnumerator(), this, _condition);
     	}
 
         private void Dispose()
@@ -36,13 +36,13 @@ namespace MemoryPools.Collections.Linq
 	        }
         }
 
-    	internal class WhereClauseEnumerator : IPoolingEnumerator<T>
+    	internal class WhereExprEnumerator : IPoolingEnumerator<T>
     	{
     		private Func<T, bool> _mutator;
     		private IPoolingEnumerator<T> _src;
-            private WhereClauseEnumerable<T> _parent;
+            private WhereExprEnumerable<T> _parent;
     
-    		public WhereClauseEnumerator Init(IPoolingEnumerator<T> src, WhereClauseEnumerable<T> parent, Func<T, bool> mutator) 
+    		public WhereExprEnumerator Init(IPoolingEnumerator<T> src, WhereExprEnumerable<T> parent, Func<T, bool> mutator) 
     		{
     			_src = src;
                 _mutator = mutator;

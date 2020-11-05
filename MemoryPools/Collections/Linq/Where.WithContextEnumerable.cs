@@ -2,14 +2,14 @@ using System;
 
 namespace MemoryPools.Collections.Linq
 {
-	internal class WhereClauseWithContextEnumerable<T, TContext> : IPoolingEnumerable<T> where TContext : struct
+	internal class WhereExprWithContextEnumerable<T, TContext> : IPoolingEnumerable<T> where TContext : struct
 	{
 		private int _count;
 		private IPoolingEnumerable<T> _src;
 		private Func<TContext, T, bool> _condition;
 		private TContext _context;
 
-		public WhereClauseWithContextEnumerable<T, TContext> Init(IPoolingEnumerable<T> src, TContext context, Func<TContext, T, bool> condition)
+		public WhereExprWithContextEnumerable<T, TContext> Init(IPoolingEnumerable<T> src, TContext context, Func<TContext, T, bool> condition)
 		{
 			_count = 0;
 			_src = src;
@@ -21,7 +21,7 @@ namespace MemoryPools.Collections.Linq
 		public IPoolingEnumerator<T> GetEnumerator()
 		{
 			_count++;
-			return Pool.Get<WhereClauseWithContextEnumerator>().Init(_src.GetEnumerator(), this, _context, _condition);
+			return Pool.Get<WhereExprWithContextEnumerator>().Init(_src.GetEnumerator(), this, _context, _condition);
 		}
 
 		private void Dispose()
@@ -35,16 +35,16 @@ namespace MemoryPools.Collections.Linq
 			}
 		}
 
-		internal class WhereClauseWithContextEnumerator : IPoolingEnumerator<T>
+		internal class WhereExprWithContextEnumerator : IPoolingEnumerator<T>
 		{
 			private TContext _context;
 			private Func<TContext, T, bool> _condition;
 			private IPoolingEnumerator<T> _src;
-			private WhereClauseWithContextEnumerable<T, TContext> _parent;
+			private WhereExprWithContextEnumerable<T, TContext> _parent;
     
-			public WhereClauseWithContextEnumerator Init(
+			public WhereExprWithContextEnumerator Init(
 				IPoolingEnumerator<T> src,
-				WhereClauseWithContextEnumerable<T, TContext> parent,
+				WhereExprWithContextEnumerable<T, TContext> parent,
 				TContext context,
 				Func<TContext, T, bool> condition) 
 			{

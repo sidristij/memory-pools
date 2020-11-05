@@ -1,22 +1,24 @@
 ﻿namespace MemoryPools.Collections.Linq
 {
-    internal class CastExprEnumerable<T> : IPoolingEnumerable<T>
+    internal class AppendExprEnumerable<T> : IPoolingEnumerable<T>
     {
         private int _count;
 	    
-        private IPoolingEnumerable _src;
+        private IPoolingEnumerable<T> _src;
+        private T _element;
 
-        public CastExprEnumerable<T> Init(IPoolingEnumerable src)
+        public AppendExprEnumerable<T> Init(IPoolingEnumerable<T> src, T element)
         {
             _src = src;
             _count = 0;
+            _element = element;
             return this;
         }
 
         public IPoolingEnumerator<T> GetEnumerator()
         {
             _count++;
-            return Pool.Get<CastExprEnumerator>().Init(_src.GetEnumerator(), this);
+            return Pool.Get<AppendExprEnumerator>().Init(_src.GetEnumerator(), this, _element);
         }
 
         private void Dispose()
@@ -26,35 +28,53 @@
             if (_count == 0)
             {
                 _src = default;
+                _element = default;
                 Pool.Return(this);
             }
         }
 
-        internal class CastExprEnumerator : IPoolingEnumerator<T>
+        internal class AppendExprEnumerator : IPoolingEnumerator<T>
         {
             private IPoolingEnumerator _src;
-            private CastExprEnumerable<T> _parent;
+            private AppendExprEnumerable<T> _parent;
+            private T _element;
+            private int _overcount;
 		    
-            public CastExprEnumerator Init(IPoolingEnumerator src, CastExprEnumerable<T> parent)
+            public AppendExprEnumerator Init(IPoolingEnumerator src, AppendExprEnumerable<T> parent, T element)
             {
                 _src = src;
                 _parent = parent;
+                _element = element;
+                _overcount = 0;
                 return this;
             }
 
             public bool MoveNext()
             {
-                return _src.MoveNext();
+                if (!_src.MoveNext())
+                {
+                    if (_overcount == 0)
+                    {
+                        _overcount++;
+                        return true;
+                    }
+
+                    _overcount++;
+                    return false;
+                }
+
+                return true;
             }
 
             public void Reset()
             {
+                _overcount = 0;
                 _src.Reset();
             }
 
             object IPoolingEnumerator.Current => Current;
 
-            public T Current => (T)_src.Current;
+            public T Current => _overcount == 1 ? _element : (T) _src.Current;
 
             public void Dispose()
             {

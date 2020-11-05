@@ -10,7 +10,7 @@ namespace MemoryPools.Collections.Specialized
     /// <summary>
     /// Pooling dictionary contains two PoolingLists and should be disposed at end of life.
     /// Disallowed: removing elements and getting non-generic IEnumerable.
-    /// When get IEnumerable[TKey, TValue], you need to dispose it (foreach clause do it automatically).
+    /// When get IEnumerable[TKey, TValue], you need to dispose it (foreach Expr do it automatically).
     /// You can safe add any count of elements to dispose them: all collections stores data in 128-sized chunks.
     /// These chunks are reusable btw all Pooling* collections. All operations have O(1) complexity.
     /// </summary>

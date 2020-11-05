@@ -1,12 +1,12 @@
 ﻿namespace MemoryPools.Collections.Linq
 {
-    internal class OfTypeClauseEnumerable<T> : IPoolingEnumerable<T>
+    internal class OfTypeExprEnumerable<T> : IPoolingEnumerable<T>
     {
         private int _count;
         
         private IPoolingEnumerable _src;
 
-        public OfTypeClauseEnumerable<T> Init(IPoolingEnumerable src)
+        public OfTypeExprEnumerable<T> Init(IPoolingEnumerable src)
         {
             _src = src;
             _count = 0;
@@ -16,7 +16,7 @@
         public IPoolingEnumerator<T> GetEnumerator()
         {
             _count++;
-            return Pool.Get<OfTypeClauseEnumerator>().Init(_src.GetEnumerator(), this);
+            return Pool.Get<OfTypeExprEnumerator>().Init(_src.GetEnumerator(), this);
         }
 
         private void Dispose()
@@ -30,12 +30,12 @@
             }
         }
 
-        internal class OfTypeClauseEnumerator : IPoolingEnumerator<T>
+        internal class OfTypeExprEnumerator : IPoolingEnumerator<T>
         {
             private IPoolingEnumerator _src;
-            private OfTypeClauseEnumerable<T> _parent;
+            private OfTypeExprEnumerable<T> _parent;
         	
-            public OfTypeClauseEnumerator Init(IPoolingEnumerator src, OfTypeClauseEnumerable<T> parent)
+            public OfTypeExprEnumerator Init(IPoolingEnumerator src, OfTypeExprEnumerable<T> parent)
             {
                 _src = src;
                 _parent = parent;

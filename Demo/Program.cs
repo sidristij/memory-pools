@@ -10,13 +10,13 @@ namespace Demo
         static void Main(string[] args)
         {
             var list = new PoolingListVal<int>();
-            for (var i = 0; i < 1000; i++)
+            for (var i = 0; i < 10; i++)
             {
                 list.Add(i);
             }
             
-            while (!Console.KeyAvailable)
-            foreach (var num in list.AsPooling().Where(x=> (x & 1) == 1).Cast<object>().OfType<int>())
+            // while (!Console.KeyAvailable)
+            foreach (var num in list.AsPooling().Append(100).Prepend(100))
             {
                 Console.WriteLine(num);
             }
