@@ -76,6 +76,9 @@
       <Compile Update="Collections\Linq\Append.Enumerable.cs">
         <DependentUpon>AppendPrepend.cs</DependentUpon>
       </Compile>
+      <Compile Update="Collections\Linq\Zip.Enumerable.cs">
+        <DependentUpon>Zip.cs</DependentUpon>
+      </Compile>
     </ItemGroup>
 
 </Project>

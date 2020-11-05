@@ -9,17 +9,25 @@ namespace Demo
     {
         static void Main(string[] args)
         {
-            var list = new PoolingListVal<int>();
+            var list1 = new PoolingListVal<int>();
+            var list2 = new PoolingListVal<int>();
             for (var i = 0; i < 10; i++)
             {
-                list.Add(i);
+                list1.Add(i*2);
+                if(i < 6) list2.Add(i*2+1);
             }
-            
-            // while (!Console.KeyAvailable)
-            foreach (var num in list.AsPooling().Append(100).Prepend(100))
+
+            while (!Console.KeyAvailable)
+            foreach (var tuple in list1.AsPooling().Zip(list2.AsPooling()))
             {
-                Console.WriteLine(num);
+                // Console.WriteLine($"{tuple.Item1} - {tuple.Item2}");
             }
+            // foreach (var num in list.AsPooling().Append(100).Prepend(100))
+            // {
+            //     Console.WriteLine(num);
+            // }
+            
+            // Console.WriteLine(list.AsPooling().FirstOrDefault());
         }
     }
 }

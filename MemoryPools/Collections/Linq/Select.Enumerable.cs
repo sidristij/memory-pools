@@ -18,6 +18,7 @@ namespace MemoryPools.Collections.Linq
 
 		public IPoolingEnumerator<TR> GetEnumerator()
 		{
+			_count++;
 			return Pool.Get<SelectExprEnumerator>().Init(this, _src.GetEnumerator(), _mutator);
 		}
 

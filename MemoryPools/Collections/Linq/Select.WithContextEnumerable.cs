@@ -19,8 +19,11 @@ namespace MemoryPools.Collections.Linq
 			return this;
 		}
 
-		public IPoolingEnumerator<TR> GetEnumerator() => 
-			Pool.Get<SelectExprWithContextEnumerator>().Init(this, _src.GetEnumerator(), _context, _condition);
+		public IPoolingEnumerator<TR> GetEnumerator()
+		{
+			_count++;
+			return Pool.Get<SelectExprWithContextEnumerator>().Init(this, _src.GetEnumerator(), _context, _condition);
+		}
 
 		private void Dispose()
 		{

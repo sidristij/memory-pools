@@ -15,8 +15,8 @@
 
         public IPoolingEnumerator<(T, T)> GetEnumerator()
         {
-            return Pool.Get<ZipExprEnumerator>()
-                .Init(this, _src.GetEnumerator(), _second.GetEnumerator());
+            _count++;
+            return Pool.Get<ZipExprEnumerator>().Init(this, _src.GetEnumerator(), _second.GetEnumerator());
         }
 
         private void Dispose()
