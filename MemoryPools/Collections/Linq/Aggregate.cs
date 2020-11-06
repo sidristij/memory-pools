@@ -33,7 +33,7 @@ namespace MemoryPools.Collections.Linq
             return result;
         }
 
-        public static TAccumulate Aggregate<TSource, TAccumulate>(this IEnumerable<TSource> source, TAccumulate seed, Func<TAccumulate, TSource, TAccumulate> func)
+        public static TAccumulate Aggregate<TSource, TAccumulate>(this IPoolingEnumerable<TSource> source, TAccumulate seed, Func<TAccumulate, TSource, TAccumulate> func)
         {
             if (source == null)
             {
@@ -54,7 +54,7 @@ namespace MemoryPools.Collections.Linq
             return result;
         }
 
-        public static TResult Aggregate<TSource, TAccumulate, TResult>(this IEnumerable<TSource> source, TAccumulate seed, Func<TAccumulate, TSource, TAccumulate> func, Func<TAccumulate, TResult> resultSelector)
+        public static TResult Aggregate<TSource, TAccumulate, TResult>(this IPoolingEnumerable<TSource> source, TAccumulate seed, Func<TAccumulate, TSource, TAccumulate> func, Func<TAccumulate, TResult> resultSelector)
         {
             if (source == null)
             {
