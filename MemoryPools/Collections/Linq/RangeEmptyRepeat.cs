@@ -1,8 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace MemoryPools.Collections.Linq
+﻿namespace MemoryPools.Collections.Linq
 {
+	public static partial class PoolingEnumerable<T>
+	{
+		public static IPoolingEnumerable<T> Empty => PoolingEnumerable.Range(0,0).Select(x => (T)(object)x); 
+	}
+	
     public static partial class PoolingEnumerable
     {
         public static IPoolingEnumerable<int> Range(int startIndex, int count)
@@ -14,6 +16,8 @@ namespace MemoryPools.Collections.Linq
         {
             return Pool.Get<RangeExprEnumerable>().Init(0, count - 1);
         }
+
+        public static IPoolingEnumerable<T> Repeat<T>(T element, int count) => Range(0, count).Select(element, (item, x) => item);
     }
 
     internal class RangeExprEnumerable : IPoolingEnumerable<int>

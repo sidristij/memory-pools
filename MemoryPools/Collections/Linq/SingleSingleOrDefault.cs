@@ -47,7 +47,7 @@ namespace MemoryPools.Collections.Linq
             return element;
         }
 		
-        public static T Single<T, TContext>(this IPoolingEnumerable<T> source, TContext context, Func<TContext, T, bool> condition) where TContext : struct
+        public static T Single<T, TContext>(this IPoolingEnumerable<T> source, TContext context, Func<TContext, T, bool> condition)
         {
             var wasFound = false;
             var element = default(T);
@@ -113,7 +113,7 @@ namespace MemoryPools.Collections.Linq
             return element;
         }
 		
-        public static T SingleOrDefault<T, TContext>(this IPoolingEnumerable<T> source, TContext context, Func<TContext, T, bool> condition) where TContext : struct
+        public static T SingleOrDefault<T, TContext>(this IPoolingEnumerable<T> source, TContext context, Func<TContext, T, bool> condition)
         {
             var wasFound = false;
             var element = default(T);

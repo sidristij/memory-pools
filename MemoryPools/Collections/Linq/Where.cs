@@ -9,7 +9,7 @@ namespace MemoryPools.Collections.Linq
 			return Pool.Get<WhereExprEnumerable<T>>().Init(source, condition);
 		}
 		
-		public static IPoolingEnumerable<T> Where<T, TContext>(this IPoolingEnumerable<T> source, TContext context, Func<TContext, T, bool> condition) where TContext : struct
+		public static IPoolingEnumerable<T> Where<T, TContext>(this IPoolingEnumerable<T> source, TContext context, Func<TContext, T, bool> condition)
 		{
 			return Pool.Get<WhereExprWithContextEnumerable<T, TContext>>().Init(source, context, condition);
 		}

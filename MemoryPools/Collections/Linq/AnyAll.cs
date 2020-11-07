@@ -27,7 +27,7 @@ namespace MemoryPools.Collections.Linq
             return false;
         }
 		
-        public static bool Any<T, TContext>(this IPoolingEnumerable<T> source, TContext context, Func<TContext, T, bool> condition) where TContext : struct
+        public static bool Any<T, TContext>(this IPoolingEnumerable<T> source, TContext context, Func<TContext, T, bool> condition)
         {
             var enumerator = source.GetEnumerator();
             while (enumerator.MoveNext())
@@ -58,7 +58,7 @@ namespace MemoryPools.Collections.Linq
 
         }
 		
-        public static bool All<T, TContext>(this IPoolingEnumerable<T> source, TContext context, Func<TContext, T, bool> condition) where TContext : struct
+        public static bool All<T, TContext>(this IPoolingEnumerable<T> source, TContext context, Func<TContext, T, bool> condition)
         {
             var enumerator = source.GetEnumerator();
             while (enumerator.MoveNext())

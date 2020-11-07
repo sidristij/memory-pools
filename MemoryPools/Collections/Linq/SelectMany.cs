@@ -14,7 +14,7 @@ namespace MemoryPools.Collections.Linq
         public static IPoolingEnumerable<TR> SelectMany<T, TR, TContext>(
             this IPoolingEnumerable<T> source,
             TContext context,
-            Func<T, TContext, IPoolingEnumerable<TR>> mutator) where TContext : struct
+            Func<T, TContext, IPoolingEnumerable<TR>> mutator)
         {
             return Pool.Get<SelectManyExprWithContextEnumerable<T, TR, TContext>>().Init(source, mutator, context);
         }

@@ -2,7 +2,7 @@ using System;
 
 namespace MemoryPools.Collections.Linq
 {
-	internal class WhereExprWithContextEnumerable<T, TContext> : IPoolingEnumerable<T> where TContext : struct
+	internal class WhereExprWithContextEnumerable<T, TContext> : IPoolingEnumerable<T>
 	{
 		private int _count;
 		private IPoolingEnumerable<T> _src;

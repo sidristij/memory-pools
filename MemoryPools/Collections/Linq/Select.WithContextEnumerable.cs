@@ -3,7 +3,7 @@ using System;
 
 namespace MemoryPools.Collections.Linq
 {
-	internal class SelectExprWithContextEnumerable<T, TR, TContext> : IPoolingEnumerable<TR> where TContext : struct
+	internal class SelectExprWithContextEnumerable<T, TR, TContext> : IPoolingEnumerable<TR>
 	{
 		private IPoolingEnumerable<T> _src;
 		private Func<TContext, T, TR> _condition;

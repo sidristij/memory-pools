@@ -9,7 +9,7 @@ namespace MemoryPools.Collections.Linq
 			return Pool.Get<SelectExprEnumerable<T, TR>>().Init(source, mutator);
 		}
 		
-		public static IPoolingEnumerable<TR> Select<T, TR, TContext>(this IPoolingEnumerable<T> source, TContext context, Func<TContext, T, TR> mutator) where TContext : struct
+		public static IPoolingEnumerable<TR> Select<T, TR, TContext>(this IPoolingEnumerable<T> source, TContext context, Func<TContext, T, TR> mutator)
 		{
 			return Pool.Get<SelectExprWithContextEnumerable<T, TR, TContext>>().Init(source, context, mutator);
 		}

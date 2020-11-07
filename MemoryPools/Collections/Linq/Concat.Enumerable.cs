@@ -1,11 +1,11 @@
 ﻿namespace MemoryPools.Collections.Linq
 {
-    internal class UnionExprEnumerable<T> : IPoolingEnumerable<T>
+    internal class ConcatExprEnumerable<T> : IPoolingEnumerable<T>
     {
         private IPoolingEnumerable<T> _src, _second;
         private int _count;
 
-        public UnionExprEnumerable<T> Init(IPoolingEnumerable<T> src, IPoolingEnumerable<T> second)
+        public ConcatExprEnumerable<T> Init(IPoolingEnumerable<T> src, IPoolingEnumerable<T> second)
         {
             _src = src;
             _count = 0;
@@ -16,7 +16,7 @@
         public IPoolingEnumerator<T> GetEnumerator()
         {
             _count++;
-            return Pool.Get<UnionExprEnumerator>().Init(this, _src.GetEnumerator(), _second.GetEnumerator());
+            return Pool.Get<ConcatExprEnumerator>().Init(this, _src.GetEnumerator(), _second.GetEnumerator());
         }
 
         private void Dispose()
@@ -31,14 +31,14 @@
             }
         }
 
-        internal class UnionExprEnumerator : IPoolingEnumerator<T>
+        internal class ConcatExprEnumerator : IPoolingEnumerator<T>
         {
-            private UnionExprEnumerable<T> _parent;
+            private ConcatExprEnumerable<T> _parent;
             private IPoolingEnumerator<T> _src, _second;
             private bool _first;
 
-            public UnionExprEnumerator Init(
-                UnionExprEnumerable<T> parent, IPoolingEnumerator<T> src, IPoolingEnumerator<T> second) 
+            public ConcatExprEnumerator Init(
+                ConcatExprEnumerable<T> parent, IPoolingEnumerator<T> src, IPoolingEnumerator<T> second) 
             {
                 _parent = parent;
                 _src = src;

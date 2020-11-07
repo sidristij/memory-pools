@@ -33,7 +33,7 @@ namespace MemoryPools.Collections.Linq
             throw new InvalidOperationException("Sequence is empty");
         }
 		
-        public static T First<T, TContext>(this IPoolingEnumerable<T> source, TContext context, Func<TContext, T, bool> condition) where TContext : struct
+        public static T First<T, TContext>(this IPoolingEnumerable<T> source, TContext context, Func<TContext, T, bool> condition)
         {
             var enumerator = source.GetEnumerator();
             while (enumerator.MoveNext())
@@ -77,7 +77,7 @@ namespace MemoryPools.Collections.Linq
 
         }
 		
-        public static T FirstOrDefault<T, TContext>(this IPoolingEnumerable<T> source, TContext context, Func<TContext, T, bool> condition) where TContext : struct
+        public static T FirstOrDefault<T, TContext>(this IPoolingEnumerable<T> source, TContext context, Func<TContext, T, bool> condition)
         {
             var enumerator = source.GetEnumerator();
             while (enumerator.MoveNext())
