@@ -13,7 +13,7 @@ namespace MemoryPools.Collections.Specialized
 		where TK : IdealHashObjectBase
 		where TV : class
 	{
-		readonly PoolingListRef<TV> _list = Pool.Get<PoolingListRef<TV>>().Init();
+		readonly PoolingListCanon<TV> _list = Pool.Get<PoolingListCanon<TV>>().Init();
 		readonly PoolingQueue<int> _freeNodes = new PoolingQueueVal<int>();
   
 		public TV this[TK key]

@@ -27,8 +27,8 @@ namespace MemoryPools.Collections.Specialized
             public TValue value;    // Value of entry
         }
 
-        private PoolingList<int> _buckets;
-        private PoolingList<Entry> _entries;
+        private PoolingListBase<int> _buckets;
+        private PoolingListBase<Entry> _entries;
         private int _freeList;
         private int _version;
         private int _freeCount;
@@ -41,12 +41,12 @@ namespace MemoryPools.Collections.Specialized
 
         private void Initialize(int capacity) {
             var size = HashHelpers.GetPrime(capacity);
-            _buckets = new PoolingListVal<int>();
+            _buckets = new PoolingList<int>();
             for (var i = 0; i < size; i++)
             {
                 _buckets.Add(-1);
             }
-            _entries = new PoolingListVal<Entry>();
+            _entries = new PoolingList<Entry>();
             _freeList = -1;
         }
 

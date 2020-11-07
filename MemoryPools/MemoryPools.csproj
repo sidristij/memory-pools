@@ -12,32 +12,20 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Compile Update="Collections\Specialized\PoolingNodeRef.cs">
-        <DependentUpon>PoolingNode.cs</DependentUpon>
+      <Compile Update="Collections\Specialized\PoolingNodeCanon.cs">
+        <DependentUpon>PoolingNodeBase.cs</DependentUpon>
       </Compile>
-      <Compile Update="Collections\Specialized\PoolingNodeVal.cs">
-        <DependentUpon>PoolingNode.cs</DependentUpon>
+      <Compile Update="Collections\Specialized\PoolingNode.cs">
+        <DependentUpon>PoolingNodeBase.cs</DependentUpon>
       </Compile>
       <Compile Update="Collections\Specialized\IPoolingNode.cs">
-        <DependentUpon>PoolingNode.cs</DependentUpon>
+        <DependentUpon>PoolingNodeBase.cs</DependentUpon>
       </Compile>
       <Compile Update="Collections\Specialized\PoolingQueueRef.cs">
         <DependentUpon>PoolingQueue.cs</DependentUpon>
       </Compile>
       <Compile Update="Collections\Specialized\PoolingQueueVal.cs">
         <DependentUpon>PoolingQueue.cs</DependentUpon>
-      </Compile>
-      <Compile Update="Collections\Specialized\PoolingStackRef.cs">
-        <DependentUpon>PoolingStack.cs</DependentUpon>
-      </Compile>
-      <Compile Update="Collections\Specialized\PoolingStackVal.cs">
-        <DependentUpon>PoolingStack.cs</DependentUpon>
-      </Compile>
-      <Compile Update="Collections\Specialized\PoolingListRef.cs">
-        <DependentUpon>PoolingList.cs</DependentUpon>
-      </Compile>
-      <Compile Update="Collections\Specialized\PoolingListVal.cs">
-        <DependentUpon>PoolingList.cs</DependentUpon>
       </Compile>
       <Compile Update="Collections\Specialized\PoolingDictionary.KeysCollection.cs">
         <DependentUpon>PoolingDictionary.cs</DependentUpon>
@@ -89,6 +77,21 @@
       </Compile>
       <Compile Update="Collections\Linq\SkipTake.ExprPoolingEnumerable.cs">
         <DependentUpon>SkipTake.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Collections\Specialized\PoolingList.cs">
+        <DependentUpon>PoolingListBase.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Collections\Specialized\PoolingListCanon.cs">
+        <DependentUpon>PoolingListBase.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Collections\Specialized\PoolingStack.cs">
+        <DependentUpon>PoolingStackBase.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Collections\Specialized\PoolingStackCanon.cs">
+        <DependentUpon>PoolingStackBase.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Collections\Linq\Reverse.Enumerable.cs">
+        <DependentUpon>Reverse.cs</DependentUpon>
       </Compile>
     </ItemGroup>
 

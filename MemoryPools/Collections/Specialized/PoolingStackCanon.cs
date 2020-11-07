@@ -1,6 +1,9 @@
 ﻿namespace MemoryPools.Collections.Specialized
 {
-	public sealed class PoolingQueueRef<T> : PoolingQueue<T> where T : class
+	/// <summary>
+	/// Collection, which is working on shared btw all Pooling* collections buckets
+	/// </summary>
+	public class PoolingStackCanon<T> : PoolingStackBase<T> where T : class
 	{
 		protected override IPoolingNode<T> CreateNodeHolder()
 		{

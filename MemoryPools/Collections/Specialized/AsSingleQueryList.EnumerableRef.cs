@@ -1,65 +1,68 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using MemoryPools.Memory;
-
-namespace MemoryPools.Collections.Specialized
+﻿namespace MemoryPools.Collections.Specialized
 {
 	public static partial class AsSingleQueryList 
 	{
-		private class EnumerableRef<T> : IEnumerable<T> where T : class
+		private class EnumerableShared<T> : IPoolingEnumerable<T> where T : class
 		{
-			private PoolingListRef<T> _src;
+			private PoolingListCanon<T> _src;
+			private int _count;
 
-			public IEnumerable<T> Init(PoolingListRef<T> src)
+			public IPoolingEnumerable<T> Init(PoolingListCanon<T> src)
 			{
 				_src = src;
+				_count = 0;
 				return this;
 			}
 
-			public IEnumerator<T> GetEnumerator()
+			public IPoolingEnumerator<T> GetEnumerator()
 			{
-				var src = _src;
-				_src = default;
-				Pool.Return<EnumerableRef<T>>(this);
-				return Pool.Get<EnumeratorRef>().Init(src);
+				_count++;
+				return Pool.Get<EnumeratorRef>().Init(this, _src);
 			}
 
-			IEnumerator IEnumerable.GetEnumerator()
-			{
-				return GetEnumerator();
-			}
+			IPoolingEnumerator IPoolingEnumerable.GetEnumerator() => GetEnumerator();
 
-			private class EnumeratorRef : IEnumerator<T> 
+			private void Dispose()
 			{
-				private PoolingListRef<T> _src;
-				private IEnumerator<T> _enumerator;
-
-				public IEnumerator<T> Init(PoolingListRef<T> src)
+				if (_count == 0) return;
+				_count--;
+				if (_count == 0)
 				{
-					_src = src;
-					_enumerator = _src.GetEnumerator();
+					_src?.Dispose();
+					_src = default;
+					Pool.Return(this);
+				}
+			}
+
+			private class EnumeratorRef : IPoolingEnumerator<T> 
+			{
+				private IPoolingEnumerator<T> _enumerator;
+				private EnumerableShared<T> _parent;
+
+				public IPoolingEnumerator<T> Init(EnumerableShared<T> parent, IPoolingEnumerable<T> src)
+				{
+					_parent = parent;
+					_enumerator = src.GetEnumerator();
 					return this;
 				}
 
 				public bool MoveNext() => _enumerator.MoveNext();
 
-				public void Reset()
-				{
-					_enumerator?.Dispose();
-					_enumerator = _src.GetEnumerator();
-				}
+				public void Reset() => _enumerator.Reset();
 
 				public T Current => _enumerator.Current;
 
-				object IEnumerator.Current => Current;
+				object IPoolingEnumerator.Current => Current;
 
 				public void Dispose()
 				{
 					_enumerator?.Dispose();
-					_src?.Dispose();
-					Pool.Return(_src);
+					_enumerator = default;
+					
+					_parent?.Dispose();
+					_parent = default;
+					
 					Pool.Return(this);
-					_src = default;
 				}
 			}
 		}

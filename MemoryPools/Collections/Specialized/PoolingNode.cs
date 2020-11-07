@@ -1,33 +1,18 @@
-﻿using System.Buffers;
-
-namespace MemoryPools.Collections.Specialized
+﻿namespace MemoryPools.Collections.Specialized
 {
-	internal abstract class PoolingNode<T> : IPoolingNode<T>
+	internal sealed class PoolingNode<T> : PoolingNodeBase<T>
 	{
-		protected IMemoryOwner<T> _buf;
-
-		public int Length => _buf.Memory.Length;
-
-		public virtual T this[int index]
+		public override void Dispose()
 		{
-			get => _buf.Memory.Span[index];
-			set => _buf.Memory.Span[index] = value;
+			base.Dispose();
+			Pool.Return(this);
 		}
 
-		public virtual void Dispose()
+		public override IPoolingNode<T> Init(int capacity)
 		{
-			_buf.Dispose();
-			_buf = null;
 			Next = null;
-		}
-
-		public IPoolingNode<T> Next { get; set; }
-
-		public abstract IPoolingNode<T> Init(int capacity);
-
-		public void Clear()
-		{
-			_buf.Memory.Span.Clear();
+			_buf = Pool.GetBuffer<T>(capacity);
+			return this;
 		}
 	}
 }

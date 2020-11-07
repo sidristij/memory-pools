@@ -2,7 +2,7 @@
 
 namespace MemoryPools.Collections.Specialized
 {
-	internal sealed class PoolingNodeRef<T> : PoolingNode<object>, IPoolingNode<T> where T : class
+	internal sealed class PoolingNodeCanon<T> : PoolingNodeBase<object>, IPoolingNode<T> where T : class
 	{
 		IPoolingNode<T> IPoolingNode<T>.Next
 		{

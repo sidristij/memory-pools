@@ -9,7 +9,7 @@ namespace MemoryPools.Tests.Collections.Specialized
 		[Test]
 		public void TestEmpty()
 		{
-			using var list = new PoolingListRef<object>();
+			using var list = new PoolingListCanon<object>();
 
 			Assert.AreEqual(0, list.Count);
 			Assert.AreEqual(false, list.IsReadOnly);
@@ -19,7 +19,8 @@ namespace MemoryPools.Tests.Collections.Specialized
 		[Test]
 		public void SingleAddition()
 		{
-			using var list = new PoolingListRef<object> { 30 };
+			using var list = new PoolingListCanon<object>();
+			list.Add(30);
 
 			Assert.AreEqual(1, list.Count);
 			Assert.AreEqual(30, list[0]);
@@ -28,7 +29,7 @@ namespace MemoryPools.Tests.Collections.Specialized
 		[Test]
 		public void AllAdditions()
 		{
-			using var list = new PoolingListRef<object>();
+			using var list = new PoolingListCanon<object>();
 			
 			for (int i = 0; i < LocalList<int>.Capacity; i++)
 			{
@@ -41,7 +42,7 @@ namespace MemoryPools.Tests.Collections.Specialized
 		[Test]
 		public void SingleAdditionAndRemove()
 		{
-			using var list = new PoolingListRef<object>();
+			using var list = new PoolingListCanon<object>();
 			list.Add(30);
 			list.Remove(30);
 			
@@ -52,7 +53,7 @@ namespace MemoryPools.Tests.Collections.Specialized
 		[Test]
 		public void SingleAdditionAndRemoveAt()
 		{
-			using var list = new PoolingListRef<object>();
+			using var list = new PoolingListCanon<object>();
 			list.Add(30);
 			list.RemoveAt(0);
 			
@@ -63,7 +64,7 @@ namespace MemoryPools.Tests.Collections.Specialized
 		[Test]
 		public void RemoveIfEmpty()
 		{
-			using var list = new PoolingListRef<object>();
+			using var list = new PoolingListCanon<object>();
 
 			Assert.AreEqual(0, list.Count);
 			Assert.AreEqual(false, list.Remove(29)); 
@@ -72,7 +73,7 @@ namespace MemoryPools.Tests.Collections.Specialized
 		[Test]
 		public void RemoveAtIfEmpty()
 		{
-			using var list = new PoolingListRef<object>();
+			using var list = new PoolingListCanon<object>();
 
 			Assert.AreEqual(0, list.Count);
 			Assert.Throws<IndexOutOfRangeException>(() => { list.RemoveAt(0); });
@@ -81,12 +82,10 @@ namespace MemoryPools.Tests.Collections.Specialized
 		[Test]
 		public void MakeListFromValueTuple()
 		{
-			using var list = new PoolingListRef<object>
-			{
-				10, 
-				20, 
-				30
-			};
+			using var list = new PoolingListCanon<object>();
+			list.Add(10);
+			list.Add(20);
+			list.Add(30);
 
 
 			Assert.AreEqual(3, list.Count);
@@ -100,7 +99,7 @@ namespace MemoryPools.Tests.Collections.Specialized
 		[Test]
 		public void MakeListFromValueTupleAndGoBack()
 		{
-			using var list = new PoolingListRef<object>();
+			using var list = new PoolingListCanon<object>();
 
 			list.Add(10);
 			list.Add(20);
@@ -117,7 +116,7 @@ namespace MemoryPools.Tests.Collections.Specialized
 		[Test]
 		public void MakeListFromValueTupleClearAndFillBack()
 		{
-			using var list = new PoolingListRef<object>();
+			using var list = new PoolingListCanon<object>();
 
 			list.Add(10);
 			list.Add(20);
