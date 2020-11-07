@@ -72,8 +72,9 @@ namespace MemoryPools.Collections.Linq
     
     		public void Dispose()
     		{
-    			_parent.Dispose();
+    			_parent?.Dispose();
                 _parent = default;
+                _src?.Dispose();
     			_src = default;
     			Pool.Return(this);
     		}

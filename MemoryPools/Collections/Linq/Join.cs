@@ -5,7 +5,7 @@ using MemoryPools.Collections.Specialized;
 
 namespace MemoryPools.Collections.Linq
 {
-    public static partial class EnumerableEx
+    public static partial class PoolingEnumerable
     {
         // public static IPoolingEnumerable<TResult> Join<TOuter, TInner, TKey, TResult>(
         //     this IPoolingEnumerable<TOuter> outer, 

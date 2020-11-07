@@ -1,6 +1,6 @@
 ﻿namespace MemoryPools.Collections.Linq
 {
-    public static partial class EnumerableEx
+    public static partial class PoolingEnumerable
     {
         public static IPoolingEnumerable<TR> Cast<TR>(this IPoolingEnumerable source)
         {

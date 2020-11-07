@@ -61,7 +61,7 @@ namespace MemoryPools.Collections.Linq
 			{
 				_parent?.Dispose();
 				_parent = default;
-				_src.Dispose();
+				_src?.Dispose();
 				_src = default;
 				Pool.Return(this);
 			}

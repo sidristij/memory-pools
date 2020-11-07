@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace MemoryPools.Collections.Linq
 {
-    public static partial class EnumerableEx
+    public static partial class PoolingEnumerable
     {
         public static int Min(this IPoolingEnumerable<int> source)
         {

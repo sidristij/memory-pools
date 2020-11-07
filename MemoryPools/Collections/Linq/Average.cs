@@ -2,7 +2,7 @@
 
 namespace MemoryPools.Collections.Linq
 {
-    public static partial class EnumerableEx
+    public static partial class PoolingEnumerable
     {
         public static double Average(this IPoolingEnumerable<int> source)
         {

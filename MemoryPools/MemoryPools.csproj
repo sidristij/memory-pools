@@ -84,6 +84,9 @@
       <Compile Update="Collections\Linq\SelectMany.ExprEnumerable.cs">
         <DependentUpon>SelectMany.cs</DependentUpon>
       </Compile>
+      <Compile Update="Collections\Linq\SelectMany.ExprWithContextEnumerable.cs">
+        <DependentUpon>SelectMany.cs</DependentUpon>
+      </Compile>
     </ItemGroup>
 
 </Project>

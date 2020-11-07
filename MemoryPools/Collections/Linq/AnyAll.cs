@@ -2,7 +2,7 @@
 
 namespace MemoryPools.Collections.Linq
 {
-    public static partial class EnumerableEx
+    public static partial class PoolingEnumerable
     {
         public static bool Any<T>(this IPoolingEnumerable<T> source)
         {

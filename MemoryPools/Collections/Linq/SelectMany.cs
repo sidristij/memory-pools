@@ -2,7 +2,7 @@
 
 namespace MemoryPools.Collections.Linq
 {
-    public static partial class EnumerableEx
+    public static partial class PoolingEnumerable
     {
         public static IPoolingEnumerable<TR> SelectMany<T, TR>(
             this IPoolingEnumerable<T> source,
@@ -11,12 +11,12 @@ namespace MemoryPools.Collections.Linq
             return Pool.Get<SelectManyExprEnumerable<T, TR>>().Init(source, mutator);
         }
 	
-        // public static IPoolingEnumerable<TR> SelectMany<T, TR, TContext>(
-        //     this IPoolingEnumerable<T> source,
-        //     TContext context,
-        //     Func<TContext, T, IPoolingEnumerable<TR>> mutator) where TContext : struct
-        // {
-        //     return Pool.Get<SelectManyExprWithContextEnumerable<T, TR, TContext>>().Init(source, context, mutator);
-        // }
+        public static IPoolingEnumerable<TR> SelectMany<T, TR, TContext>(
+            this IPoolingEnumerable<T> source,
+            TContext context,
+            Func<T, TContext, IPoolingEnumerable<TR>> mutator) where TContext : struct
+        {
+            return Pool.Get<SelectManyExprWithContextEnumerable<T, TR, TContext>>().Init(source, mutator, context);
+        }
     }
 }
