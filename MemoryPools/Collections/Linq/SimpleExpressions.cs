@@ -1,4 +1,6 @@
-﻿namespace MemoryPools.Collections.Linq
+﻿using System;
+
+namespace MemoryPools.Collections.Linq
 {
 	public static partial class PoolingEnumerable<T>
 	{
@@ -9,27 +11,69 @@
     {
         public static IPoolingEnumerable<int> Range(int startIndex, int count)
         {
-            return Pool.Get<RangeExprEnumerable>().Init(startIndex, startIndex + count);
+            return Pool.Get<RangeExprEnumerable>().Init(startIndex, count);
         }
 
         public static IPoolingEnumerable<int> Range(int count)
         {
-            return Pool.Get<RangeExprEnumerable>().Init(0, count - 1);
+            return Pool.Get<RangeExprEnumerable>().Init(0, count);
         }
 
         public static IPoolingEnumerable<T> Repeat<T>(T element, int count) => Range(0, count).Select(element, (item, x) => item);
+
+        public static bool Contains<T>(this IPoolingEnumerable<T> self, T element)
+        {
+	        foreach (var item in self)
+	        {
+		        if (item.Equals(element)) return true;
+	        }
+
+	        return false;
+        }
+
+        public static int Count<T>(this IPoolingEnumerable<T> self)
+        {
+	        var count = 0;
+	        foreach (var _ in self)
+	        {
+		        count++;
+	        }
+	        return count;
+        }
+
+        public static long LongCount<T>(this IPoolingEnumerable<T> self)
+        {
+	        long count = 0;
+	        foreach (var _ in self)
+	        {
+		        count++;
+	        }
+	        return count;
+        }
+
+        public static T ElementAt<T>(this IPoolingEnumerable<T> self, int position)
+        {
+	        var i = 0;
+	        foreach (var item in self)
+	        {
+		        if (i == position) return item;
+		        i++;
+	        }
+
+	        throw new InvalidOperationException("Sequence is too small. Index not found");
+        }
     }
 
     internal class RangeExprEnumerable : IPoolingEnumerable<int>
     	{
     		private int _start;
-    		private int _last;
+    		private int _workCount;
     		private int _count;
     
-    		public RangeExprEnumerable Init(int start, int last)
+    		public RangeExprEnumerable Init(int start, int count)
             {
 	            _start = start;
-	            _last = last;
+	            _workCount = count;
 	            _count = 0;
     			return this;
     		}
@@ -37,7 +81,7 @@
     		public IPoolingEnumerator<int> GetEnumerator()
     		{
     			_count++;
-    			return Pool.Get<RangeExprEnumerator>().Init(this, _start, _last);
+    			return Pool.Get<RangeExprEnumerator>().Init(this, _start, _workCount);
     		}
     
     		private void Dispose()
@@ -46,7 +90,7 @@
     			_count--;
     			if (_count == 0)
                 {
-	                _start = _last = 0;
+	                _start = _workCount = 0;
     				_count = 0;
     				Pool.Return(this);
     			}
@@ -56,36 +100,36 @@
             {
 	            private int _start;
 	            private int _current;
-	            private int _last;
+	            private int _workCount;
 	            private RangeExprEnumerable _parent;
 	            
-    			public RangeExprEnumerator Init(RangeExprEnumerable parent, int start, int last)
+    			public RangeExprEnumerator Init(RangeExprEnumerable parent, int start, int workCount)
                 {
 	                _current = -1;
 	                _start = start;
-	                _last = last;
+	                _workCount = workCount;
 	                _parent = parent;
     				return this;
     			}
 
                 public bool MoveNext()
                 {
-	                if (_current == _last) return false;
+	                if (_current == 0) return false;
 	                if (_current == -1)
 	                {
-		                _current = _start;
-		                return _start != _last;
+		                _current = _workCount;
+		                return _workCount != 0;
 	                }
 
-	                _current++;
-	                return _start != _last;
+	                _current--;
+	                return _current != 0;
                 }
     
     			public void Reset() => _current = _start;
     
     			object IPoolingEnumerator.Current => _current;
     
-    			public int Current => _current;
+    			public int Current => _start + (_workCount - _current);
     
     			public void Dispose()
                 {

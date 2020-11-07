@@ -87,6 +87,9 @@
       <Compile Update="Collections\Linq\SelectMany.ExprWithContextEnumerable.cs">
         <DependentUpon>SelectMany.cs</DependentUpon>
       </Compile>
+      <Compile Update="Collections\Linq\SkipTake.ExprPoolingEnumerable.cs">
+        <DependentUpon>SkipTake.cs</DependentUpon>
+      </Compile>
     </ItemGroup>
 
 </Project>
