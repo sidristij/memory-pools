@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using MemoryPools.Collections.Specialized.Helpers;
-using MemoryPools.Memory;
 
 namespace MemoryPools.Collections.Specialized
 {
@@ -27,27 +26,33 @@ namespace MemoryPools.Collections.Specialized
             public TValue value;    // Value of entry
         }
 
-        private PoolingListBase<int> _buckets;
-        private PoolingListBase<Entry> _entries;
+        private IEqualityComparer<TKey> _comparer;
+        private PoolingList<int> _buckets;
+        private PoolingList<Entry> _entries;
         private int _freeList;
         private int _version;
         private int _freeCount;
         private int _count;
         private int _complexity;
+        private bool _refType;
         private ICollection<TKey> _keys;
         private ICollection<TValue> _values;
 
-        public PoolingDictionary() => Initialize(0);
+        public PoolingDictionary() => Init(0);
 
-        private void Initialize(int capacity) {
+        public PoolingDictionary<TKey, TValue> Init(int capacity)
+        {
+            _refType = typeof(TKey).IsClass;
             var size = HashHelpers.GetPrime(capacity);
-            _buckets = new PoolingList<int>();
+            _buckets = Pool.Get<PoolingList<int>>().Init();
             for (var i = 0; i < size; i++)
             {
                 _buckets.Add(-1);
             }
-            _entries = new PoolingList<Entry>();
+            _entries = Pool.Get<PoolingList<Entry>>().Init();
             _freeList = -1;
+            _comparer = EqualityComparer<TKey>.Default;
+            return this;
         }
 
         public bool TryGetValue(TKey key, out TValue value)
@@ -92,7 +97,7 @@ namespace MemoryPools.Collections.Specialized
             var hashCode = key.GetHashCode() & 0x7FFFFFFF;
             for (var i = _buckets[hashCode % _buckets.Count]; i >= 0; i = _entries[i].next) 
             {
-                if (_entries[i].hashCode == hashCode && _entries[i].key.Equals(key)) return i;
+                if (_entries[i].hashCode == hashCode && _comparer.Equals(_entries[i].key, key)) return i;
             }
             return -1;
         }
@@ -110,17 +115,17 @@ namespace MemoryPools.Collections.Specialized
 
         private void Insert(TKey key, TValue value, bool add) {
         
-            if( key == null ) {
+            if( _refType && key == null ) {
                 throw new ArgumentNullException(nameof(key));
             }
  
-            if (_buckets == null) Initialize(PoolsDefaults.DefaultPoolBucketSize);
+            if (_buckets == null) Init(PoolsDefaults.DefaultPoolBucketSize);
             var hashCode = key.GetHashCode() & 0x7FFFFFFF;
             var targetBucket = hashCode % _buckets.Count;
             var complexity = 0;
             for (int i = _buckets[targetBucket]; i >= 0; i = _entries[i].next) 
             {
-                if (_entries[i].hashCode == hashCode && _entries[i].key.Equals(key)) 
+                if (_entries[i].hashCode == hashCode && _comparer.Equals(_entries[i].key, key)) 
                 {
                     if (add) { 
                         throw new ArgumentException("Duplicating key found in dictionary");
@@ -211,10 +216,17 @@ namespace MemoryPools.Collections.Specialized
             {
                 _version++;
             }
-            _buckets?.Clear();
+            
             _buckets?.Dispose();
-            _entries?.Clear();
+            Pool.Return(_buckets);
+
             _entries?.Dispose();
+            Pool.Return(_entries);
+
+            _buckets = default;
+            _entries = default;
+            _comparer = default;
+            _complexity = _count = _version = _freeCount = _freeList = default;
         }
 
         public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator() => 
@@ -243,7 +255,7 @@ namespace MemoryPools.Collections.Specialized
             var keyHash = item.Key.GetHashCode() & 0x7FFFFFFF;
             for (var i = 0; i < _entries.Count; i++)
             {
-                if(_entries[i].hashCode == keyHash && _entries[i].key.Equals(item.Key) && 
+                if(_entries[i].hashCode == keyHash && _comparer.Equals(_entries[i].key, item.Key) && 
                    _entries[i].value.Equals(item.Value))
                 {
                     return true;
