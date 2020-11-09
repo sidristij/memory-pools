@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Threading;
 
 namespace MemoryPools.Collections.Linq
 {
@@ -61,6 +63,25 @@ namespace MemoryPools.Collections.Linq
 	        }
 
 	        throw new InvalidOperationException("Sequence is too small. Index not found");
+        }
+
+        public static bool SequenceEqual<T>(this IPoolingEnumerable<T> self, IPoolingEnumerable<T> other)
+        {
+	        var comparer = EqualityComparer<T>.Default;
+	        using var left = self.GetEnumerator();
+	        using var right = other.GetEnumerator();
+	        bool equals, leftHas, rightHas;
+	        
+	        do
+	        {
+		        leftHas = left.MoveNext();
+		        rightHas = right.MoveNext();
+		        equals = comparer.Equals(left.Current, right.Current);
+		        
+		        if (leftHas != rightHas || !equals) return false;
+	        } while (leftHas && rightHas);
+
+	        return !leftHas && !rightHas;
         }
     }
 
