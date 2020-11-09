@@ -89,7 +89,7 @@ namespace MemoryPools.Collections.Specialized
 
         private int FindEntry(TKey key) 
         {
-            if( key == null)
+            if(_refType && key == null)
             {
                 throw new ArgumentNullException(nameof(key));
             }

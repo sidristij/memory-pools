@@ -99,6 +99,9 @@
       <Compile Update="Collections\Linq\Distinct.Enumerable.cs">
         <DependentUpon>Distinct.cs</DependentUpon>
       </Compile>
+      <Compile Update="Collections\Linq\Except.Enumerable.cs">
+        <DependentUpon>Except.cs</DependentUpon>
+      </Compile>
     </ItemGroup>
 
 </Project>
