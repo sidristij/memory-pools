@@ -16,16 +16,16 @@ namespace MemoryPools.Collections.Linq
             IEqualityComparer<T> comparer = default)
         {
             _src = src;
-            _second = second;
-            _comparer = comparer;
             _count = 0;
+            _second = second;
+            _comparer = comparer ?? EqualityComparer<T>.Default;
             return this;
         }
 
         public IPoolingEnumerator<T> GetEnumerator()
         {
             _count++;
-            return Pool.Get<IntersectExprEnumerator>().Init(this, _src.GetEnumerator());
+            return Pool.Get<IntersectExprEnumerator>().Init(this, _src.GetEnumerator(), _comparer);
         }
 
         private void Dispose()
@@ -49,11 +49,11 @@ namespace MemoryPools.Collections.Linq
             private IPoolingEnumerator<T> _src;
             private PoolingDictionary<T, int> _alreadyDoneItems;
             
-            public IntersectExprEnumerator Init(IntersectExprEnumerable<T> parent, IPoolingEnumerator<T> src)
+            public IntersectExprEnumerator Init(IntersectExprEnumerable<T> parent, IPoolingEnumerator<T> src, IEqualityComparer<T> comparer)
             {
                 _src = src;
                 _parent = parent;
-                _alreadyDoneItems = Pool.Get<PoolingDictionary<T, int>>().Init(0);
+                _alreadyDoneItems = Pool.Get<PoolingDictionary<T, int>>().Init(0, comparer);
                 return this;
             }
 
