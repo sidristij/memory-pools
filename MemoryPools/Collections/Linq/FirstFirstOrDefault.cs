@@ -4,6 +4,9 @@ namespace MemoryPools.Collections.Linq
 {
     public static partial class PoolingEnumerable
     {
+        /// <summary>
+        /// Gets first element from sequence. Complexity = O(1)
+        /// </summary>
         public static T First<T>(this IPoolingEnumerable<T> source)
         {
             var enumerator = source.GetEnumerator();
@@ -17,6 +20,9 @@ namespace MemoryPools.Collections.Linq
             return element;
         }
         
+        /// <summary>
+        /// Gets first element from sequence by given <paramref name="condition"/>. Complexity = O(1) - O(N)
+        /// </summary>
         public static T First<T>(this IPoolingEnumerable<T> source, Func<T, bool> condition)
         {
             var enumerator = source.GetEnumerator();
@@ -33,6 +39,9 @@ namespace MemoryPools.Collections.Linq
             throw new InvalidOperationException("Sequence is empty");
         }
 		
+        /// <summary>
+        /// Gets first element from sequence by given <paramref name="condition"/>. Complexity = O(1) - O(N)
+        /// </summary>
         public static T First<T, TContext>(this IPoolingEnumerable<T> source, TContext context, Func<TContext, T, bool> condition)
         {
             var enumerator = source.GetEnumerator();
@@ -49,6 +58,9 @@ namespace MemoryPools.Collections.Linq
             throw new InvalidOperationException("Sequence is empty");
         }
         
+        /// <summary>
+        /// Gets first element from sequence. Complexity = O(1)
+        /// </summary>
         public static T FirstOrDefault<T>(this IPoolingEnumerable<T> source)
         {
             var enumerator = source.GetEnumerator();
@@ -60,6 +72,9 @@ namespace MemoryPools.Collections.Linq
             return item;
         }
         
+        /// <summary>
+        /// Gets first element from sequence by given <paramref name="condition"/>. Complexity = O(1) - O(N)
+        /// </summary>
         public static T FirstOrDefault<T>(this IPoolingEnumerable<T> source, Func<T, bool> condition)
         {
             var enumerator = source.GetEnumerator();
@@ -74,9 +89,11 @@ namespace MemoryPools.Collections.Linq
             }
             enumerator.Dispose();
             return default;
-
         }
 		
+        /// <summary>
+        /// Gets first element from sequence by given <paramref name="condition"/>. Complexity = O(1) - O(N)
+        /// </summary>
         public static T FirstOrDefault<T, TContext>(this IPoolingEnumerable<T> source, TContext context, Func<TContext, T, bool> condition)
         {
             var enumerator = source.GetEnumerator();

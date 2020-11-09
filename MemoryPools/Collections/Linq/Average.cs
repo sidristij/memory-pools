@@ -4,6 +4,9 @@ namespace MemoryPools.Collections.Linq
 {
     public static partial class PoolingEnumerable
     {
+        /// <summary>
+        /// Calculates avg of all given numbers. Complexity = O(N) 
+        /// </summary>
         public static double Average(this IPoolingEnumerable<int> source)
         {
             if (source == null)
@@ -33,6 +36,9 @@ namespace MemoryPools.Collections.Linq
             }
         }
 
+        /// <summary>
+        /// Calculates avg of all given numbers. Complexity = O(N) 
+        /// </summary>
         public static double? Average(this IPoolingEnumerable<int?> source)
         {
             if (source == null)
@@ -70,6 +76,9 @@ namespace MemoryPools.Collections.Linq
             return null;
         }
 
+        /// <summary>
+        /// Calculates avg of all given numbers. Complexity = O(N) 
+        /// </summary>
         public static double Average(this IPoolingEnumerable<long> source)
         {
             if (source == null)
@@ -99,6 +108,9 @@ namespace MemoryPools.Collections.Linq
             }
         }
 
+        /// <summary>
+        /// Calculates avg of all given numbers. Complexity = O(N) 
+        /// </summary>
         public static double? Average(this IPoolingEnumerable<long?> source)
         {
             if (source == null)
@@ -136,6 +148,9 @@ namespace MemoryPools.Collections.Linq
             return null;
         }
 
+        /// <summary>
+        /// Calculates avg of all given numbers. Complexity = O(N) 
+        /// </summary>
         public static float Average(this IPoolingEnumerable<float> source)
         {
             if (source == null)
@@ -162,6 +177,9 @@ namespace MemoryPools.Collections.Linq
             }
         }
 
+        /// <summary>
+        /// Calculates avg of all given numbers. Complexity = O(N) 
+        /// </summary>
         public static float? Average(this IPoolingEnumerable<float?> source)
         {
             if (source == null)
@@ -199,6 +217,9 @@ namespace MemoryPools.Collections.Linq
             return null;
         }
 
+        /// <summary>
+        /// Calculates avg of all given numbers. Complexity = O(N) 
+        /// </summary>
         public static double Average(this IPoolingEnumerable<double> source)
         {
             if (source == null)
@@ -228,6 +249,9 @@ namespace MemoryPools.Collections.Linq
             }
         }
 
+        /// <summary>
+        /// Calculates avg of all given numbers. Complexity = O(N) 
+        /// </summary>
         public static double? Average(this IPoolingEnumerable<double?> source)
         {
             if (source == null)
@@ -265,6 +289,9 @@ namespace MemoryPools.Collections.Linq
             return null;
         }
 
+        /// <summary>
+        /// Calculates avg of all given numbers. Complexity = O(N) 
+        /// </summary>
         public static decimal Average(this IPoolingEnumerable<decimal> source)
         {
             if (source == null)
@@ -291,6 +318,9 @@ namespace MemoryPools.Collections.Linq
             }
         }
 
+        /// <summary>
+        /// Calculates avg of all given numbers. Complexity = O(N) 
+        /// </summary>
         public static decimal? Average(this IPoolingEnumerable<decimal?> source)
         {
             if (source == null)
@@ -325,6 +355,9 @@ namespace MemoryPools.Collections.Linq
             return null;
         }
 
+        /// <summary>
+        /// Calculates avg of all given numbers. Complexity = O(N) 
+        /// </summary>
         public static double Average<TSource>(this IPoolingEnumerable<TSource> source, Func<TSource, int> selector)
         {
             if (source == null)
@@ -359,6 +392,9 @@ namespace MemoryPools.Collections.Linq
             }
         }
 
+        /// <summary>
+        /// Calculates avg of all given numbers. Complexity = O(N) 
+        /// </summary>
         public static double? Average<TSource>(this IPoolingEnumerable<TSource> source, Func<TSource, int?> selector)
         {
             if (source == null)
@@ -401,6 +437,9 @@ namespace MemoryPools.Collections.Linq
             return null;
         }
 
+        /// <summary>
+        /// Calculates avg of all given numbers. Complexity = O(N) 
+        /// </summary>
         public static double Average<TSource>(this IPoolingEnumerable<TSource> source, Func<TSource, long> selector)
         {
             if (source == null)
@@ -435,6 +474,9 @@ namespace MemoryPools.Collections.Linq
             }
         }
 
+        /// <summary>
+        /// Calculates avg of all given numbers. Complexity = O(N) 
+        /// </summary>
         public static double? Average<TSource>(this IPoolingEnumerable<TSource> source, Func<TSource, long?> selector)
         {
             if (source == null)
@@ -477,6 +519,9 @@ namespace MemoryPools.Collections.Linq
             return null;
         }
 
+        /// <summary>
+        /// Calculates avg of all given numbers. Complexity = O(N) 
+        /// </summary>
         public static float Average<TSource>(this IPoolingEnumerable<TSource> source, Func<TSource, float> selector)
         {
             if (source == null)
@@ -508,6 +553,9 @@ namespace MemoryPools.Collections.Linq
             }
         }
 
+        /// <summary>
+        /// Calculates avg of all given numbers. Complexity = O(N) 
+        /// </summary>
         public static float? Average<TSource>(this IPoolingEnumerable<TSource> source, Func<TSource, float?> selector)
         {
             if (source == null)
@@ -550,6 +598,9 @@ namespace MemoryPools.Collections.Linq
             return null;
         }
 
+        /// <summary>
+        /// Calculates avg of all given numbers. Complexity = O(N) 
+        /// </summary>
         public static double Average<TSource>(this IPoolingEnumerable<TSource> source, Func<TSource, double> selector)
         {
             if (source == null)
@@ -584,6 +635,9 @@ namespace MemoryPools.Collections.Linq
             }
         }
 
+        /// <summary>
+        /// Calculates avg of all given numbers. Complexity = O(N) 
+        /// </summary>
         public static double? Average<TSource>(this IPoolingEnumerable<TSource> source, Func<TSource, double?> selector)
         {
             if (source == null)
@@ -626,6 +680,9 @@ namespace MemoryPools.Collections.Linq
             return null;
         }
 
+        /// <summary>
+        /// Calculates avg of all given numbers. Complexity = O(N) 
+        /// </summary>
         public static decimal Average<TSource>(this IPoolingEnumerable<TSource> source, Func<TSource, decimal> selector)
         {
             if (source == null)
@@ -657,6 +714,9 @@ namespace MemoryPools.Collections.Linq
             }
         }
 
+        /// <summary>
+        /// Calculates avg of all given numbers. Complexity = O(N) 
+        /// </summary>
         public static decimal? Average<TSource>(this IPoolingEnumerable<TSource> source, Func<TSource, decimal?> selector)
         {
             if (source == null)
@@ -695,6 +755,5 @@ namespace MemoryPools.Collections.Linq
 
             return null;
         }
-
     }
 }

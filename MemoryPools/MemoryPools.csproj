@@ -3,8 +3,11 @@
     <PropertyGroup>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
-        <Authors>Stanislav Sidristy</Authors>
+        <Authors>Stanislav Sidristij</Authors>
         <LangVersion>8.0</LangVersion>
+        <Nullable>disable</Nullable>
+        <Title>Objects pooling, traffic-free collections, non-allocating LINQ</Title>
+        <PackageTags>linq, collections, pool</PackageTags>
     </PropertyGroup>
 
     <ItemGroup>
@@ -67,7 +70,7 @@
         <DependentUpon>Zip.cs</DependentUpon>
       </Compile>
       <Compile Update="Collections\Linq\Concat.Enumerable.cs">
-        <DependentUpon>Union.cs</DependentUpon>
+        <DependentUpon>Concat.cs</DependentUpon>
       </Compile>
       <Compile Update="Collections\Linq\SelectMany.ExprEnumerable.cs">
         <DependentUpon>SelectMany.cs</DependentUpon>
@@ -92,6 +95,9 @@
       </Compile>
       <Compile Update="Collections\Linq\Reverse.Enumerable.cs">
         <DependentUpon>Reverse.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Collections\Linq\Distinct.Enumerable.cs">
+        <DependentUpon>Distinct.cs</DependentUpon>
       </Compile>
     </ItemGroup>
 

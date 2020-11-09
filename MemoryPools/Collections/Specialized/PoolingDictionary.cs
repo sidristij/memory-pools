@@ -16,6 +16,7 @@ namespace MemoryPools.Collections.Specialized
     public partial class PoolingDictionary<TKey, TValue> : 
         IDictionary<TKey, TValue>, 
         IReadOnlyDictionary<TKey, TValue>,
+        IPoolingEnumerable<KeyValuePair<TKey, TValue>>,
         IDisposable
     {
         [DebuggerDisplay("Key: {key}, Value: {value}")]
@@ -40,7 +41,7 @@ namespace MemoryPools.Collections.Specialized
 
         public PoolingDictionary() => Init(0);
 
-        public PoolingDictionary<TKey, TValue> Init(int capacity)
+        public PoolingDictionary<TKey, TValue> Init(int capacity, IEqualityComparer<TKey> comparer = default)
         {
             _refType = typeof(TKey).IsClass;
             var size = HashHelpers.GetPrime(capacity);
@@ -51,7 +52,7 @@ namespace MemoryPools.Collections.Specialized
             }
             _entries = Pool.Get<PoolingList<Entry>>().Init();
             _freeList = -1;
-            _comparer = EqualityComparer<TKey>.Default;
+            _comparer = comparer ?? EqualityComparer<TKey>.Default;
             return this;
         }
 
@@ -229,11 +230,6 @@ namespace MemoryPools.Collections.Specialized
             _complexity = _count = _version = _freeCount = _freeList = default;
         }
 
-        public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator() => 
-            Pool.Get<Enumerator>().Init(this);
-
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-
         public void Add(KeyValuePair<TKey, TValue> item) => 
             Insert(item.Key, item.Value, true);
 
@@ -286,7 +282,7 @@ namespace MemoryPools.Collections.Specialized
         public int Count => _count;
         public bool IsReadOnly => false;
 
-        internal class Enumerator : IEnumerator<KeyValuePair<TKey, TValue>>
+        internal class Enumerator : IEnumerator<KeyValuePair<TKey, TValue>>, IPoolingEnumerator<KeyValuePair<TKey, TValue>>
         {
             private PoolingDictionary<TKey, TValue> _src;
             private int _pos;
@@ -317,6 +313,8 @@ namespace MemoryPools.Collections.Specialized
                 _pos = -1;
             }
 
+            object IPoolingEnumerator.Current => Current;
+
             public KeyValuePair<TKey, TValue> Current
             {
                 get
@@ -336,5 +334,16 @@ namespace MemoryPools.Collections.Specialized
                 Pool.Return(this);
             }
         }
+
+        public IPoolingEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator() =>
+            Pool.Get<Enumerator>().Init(this);
+
+        IEnumerator<KeyValuePair<TKey, TValue>> IEnumerable<KeyValuePair<TKey, TValue>>.GetEnumerator() => 
+            (IEnumerator<KeyValuePair<TKey, TValue>>)GetEnumerator();
+
+        IEnumerator IEnumerable.GetEnumerator() => (IEnumerator)GetEnumerator();
+
+
+        IPoolingEnumerator IPoolingEnumerable.GetEnumerator() => GetEnumerator();
     }
 }
