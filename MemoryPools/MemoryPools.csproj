@@ -105,6 +105,9 @@
       <Compile Update="Collections\Linq\Intersect.Enumerable.cs">
         <DependentUpon>Intersect.cs</DependentUpon>
       </Compile>
+      <Compile Update="Collections\Linq\Union.Enumerable.cs">
+        <DependentUpon>Union.cs</DependentUpon>
+      </Compile>
     </ItemGroup>
 
 </Project>
