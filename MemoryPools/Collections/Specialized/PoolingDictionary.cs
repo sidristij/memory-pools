@@ -12,6 +12,7 @@ namespace MemoryPools.Collections.Specialized
     /// When get IEnumerable[TKey, TValue], you need to dispose it (foreach Expr do it automatically).
     /// You can safe add any count of elements to dispose them: all collections stores data in 128-sized chunks.
     /// These chunks are reusable btw all Pooling* collections. All operations have O(1) complexity.
+    /// Primary rets IPoolingEnumerable. But you can cast to IEnumerable to work in common manner.
     /// </summary>
     public partial class PoolingDictionary<TKey, TValue> : 
         IDictionary<TKey, TValue>, 
@@ -116,7 +117,8 @@ namespace MemoryPools.Collections.Specialized
 
         private void Insert(TKey key, TValue value, bool add) {
         
-            if( _refType && key == null ) {
+            if (_refType && key == null)
+            {
                 throw new ArgumentNullException(nameof(key));
             }
  
@@ -124,7 +126,8 @@ namespace MemoryPools.Collections.Specialized
             var hashCode = key.GetHashCode() & 0x7FFFFFFF;
             var targetBucket = hashCode % _buckets.Count;
             var complexity = 0;
-            for (int i = _buckets[targetBucket]; i >= 0; i = _entries[i].next) 
+            
+            for (var i = _buckets[targetBucket]; i >= 0; i = _entries[i].next) 
             {
                 if (_entries[i].hashCode == hashCode && _comparer.Equals(_entries[i].key, key)) 
                 {
@@ -146,13 +149,16 @@ namespace MemoryPools.Collections.Specialized
 
                 complexity++;
             }
+            
             int index;
-            if (_freeCount > 0) {
+            if (_freeCount > 0) 
+            {
                 index = _freeList;
                 _freeList = _entries[index].next;
                 _freeCount--;
             }
-            else {
+            else
+            {
                 if (_count == _entries.Count)
                 {
                     Resize();
@@ -178,11 +184,13 @@ namespace MemoryPools.Collections.Specialized
             _complexity = Math.Max(_complexity, complexity);
         }
         
-        private void Resize() {
+        private void Resize()
+        {
             Resize(HashHelpers.ExpandPrime(_count), false);
         }
  
-        private void Resize(int newSize, bool forceNewHashCodes) {
+        private void Resize(int newSize, bool forceNewHashCodes)
+        {
             while(_buckets.Count < newSize) _buckets.Add(-1);
             while(_entries.Count < newSize) _entries.Add(default);
             

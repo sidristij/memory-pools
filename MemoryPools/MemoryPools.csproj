@@ -102,6 +102,9 @@
       <Compile Update="Collections\Linq\Except.Enumerable.cs">
         <DependentUpon>Except.cs</DependentUpon>
       </Compile>
+      <Compile Update="Collections\Linq\Intersect.Enumerable.cs">
+        <DependentUpon>Intersect.cs</DependentUpon>
+      </Compile>
     </ItemGroup>
 
 </Project>
