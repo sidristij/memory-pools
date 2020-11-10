@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using MemoryPools.Collections;
 using MemoryPools.Collections.Linq;
-using MemoryPools.Collections.Specialized;
 
 namespace Demo
 {
@@ -12,26 +7,21 @@ namespace Demo
     {
         static void Main(string[] args)
         {
-            var list = new List<T>();
-            var list1 = new PoolingListVal<int>();
-            var list2 = new PoolingListVal<int>();
-            for (var i = 0; i < 10; i++)
+            while(!Console.KeyAvailable)
+            foreach (var grp in PoolingEnumerable
+                .Range(0, 100)
+                .Where(x => x % 2 == 0)
+                .Select(x => new Item { key = x,  value = x >> 2 })
+                .GroupBy(x => x.key, (key, vals) => new Item { key = key, value = vals.First().value }))
             {
-                list1.Add(i*2);
-                if(i < 6) list2.Add(i*2+1);
+                // Console.WriteLine(grp.value);
             }
-list.Aggregate()
-            // while (!Console.KeyAvailable)
-            foreach (var tuple in list1.AsPooling().Union(list2.AsPooling()))
-            {
-                Console.WriteLine($"{tuple}");
-            }
-            // foreach (var num in list.AsPooling().Append(100).Prepend(100))
-            // {
-            //     Console.WriteLine(num);
-            // }
-            
-            // Console.WriteLine(list.AsPooling().FirstOrDefault());
         }
+    }
+
+    struct Item
+    {
+        public int key;
+        public int value;
     }
 }
