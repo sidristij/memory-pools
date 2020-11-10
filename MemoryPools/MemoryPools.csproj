@@ -4,9 +4,10 @@
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
         <Authors>Stanislav Sidristij</Authors>
+        <Version>1.1.0.0</Version>
         <LangVersion>8.0</LangVersion>
         <Nullable>disable</Nullable>
-        <Title>Objects pooling, traffic-free collections, non-allocating LINQ</Title>
+        <Title>Objects pooling, buffers pooling, traffic-free collections (PoolingList, PoolingDictionary, PoolingQueue, PoolingStack), non-allocating LINQ</Title>
         <PackageTags>linq, collections, pool</PackageTags>
     </PropertyGroup>
 
