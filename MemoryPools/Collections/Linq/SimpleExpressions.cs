@@ -4,14 +4,11 @@ using System.Threading;
 
 namespace MemoryPools.Collections.Linq
 {
-	public static partial class PoolingEnumerable<T>
-	{
-		public static IPoolingEnumerable<T> Empty => PoolingEnumerable.Range(0,0).Select(x => (T)(object)x); 
-	}
-	
     public static partial class PoolingEnumerable
     {
-        public static IPoolingEnumerable<int> Range(int startIndex, int count)
+		public static IPoolingEnumerable<T> Empty<T>() => Range(0,0).Select(x => (T)(object)x); 
+
+		public static IPoolingEnumerable<int> Range(int startIndex, int count)
         {
             return Pool.Get<RangeExprEnumerable>().Init(startIndex, count);
         }

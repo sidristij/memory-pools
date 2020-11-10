@@ -108,6 +108,12 @@
       <Compile Update="Collections\Linq\Union.Enumerable.cs">
         <DependentUpon>Union.cs</DependentUpon>
       </Compile>
+      <Compile Update="Collections\Linq\GroupBy.Enumerable.cs">
+        <DependentUpon>GroupBy.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Collections\Linq\GroupBy.ResultEnumerable.cs">
+        <DependentUpon>GroupBy.cs</DependentUpon>
+      </Compile>
     </ItemGroup>
 
 </Project>
