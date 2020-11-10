@@ -26,8 +26,7 @@ while(true)
 }
 
 ```
-
-This code will not produce memory traffic.
+*This code will not produce memory traffic.*
 
 ### Buffers pooling
 
@@ -57,11 +56,11 @@ while(true)
 }
 
 ```
-This code will not produce memory traffic.
+*This code will not produce memory traffic.*
 
 ## Non-allocating LINQ
 
-Just add `.AsPooling()` to any `IEnumerable` and continue to write like regular LINQ code:
+You can start using `PoolingEnumerable.Range()` or `PoolingEnumerable.Retry()`
 
 ```csharp
 while(!Console.KeyAvailable)
@@ -70,4 +69,26 @@ while(!Console.KeyAvailable)
       // ...
     }
 ```
-This code will not produce memory traffic.
+*This code will not produce memory traffic.*
+
+Or just add `.AsPooling()` to any `IEnumerable` and continue to write like regular LINQ code:
+
+
+```csharp
+while(!Console.KeyAvailable)
+    foreach (var i in list.AsPooling().Concat(PoolingEnumerable.Range(10, 10)).Intersect(PoolingEnumerable.Range(15, 5)))
+    {
+      // ...
+    }
+```
+*This code will not produce memory traffic.*
+
+## Traffic-free collections
+
+Tired to think about memory traffic in `List<T>`, `Dictionary<TKey, TValue>`, `Stack<T>()` or `Queue<T>`?
+
+In this library you can find Pooling versions of these collections. All of them have regular version and *Canon version. Regular version use `IMemoryOwner<T>.Length=128` to store data, but *Canon version use `IMemoryOwner<object>.Length=128` to store data. 
+
+This means that when you want to store value types (structs, primitives), you should use regular version to avoid boxing. But in case of reference types (i.e. classes) *Canon version is preferred. Single cast for getting item isn't so expensive, but internal chunks can be reused in other collections of Pooling family to store items of different types.
+
+In other words, when you create `PoolingList<Boo>` and fill it with 256 items (2 internal chunks with 128 items in each). After this you clean it or dispose it to return internal chanks to pool. And if you'll create... `PoolingStack<Foo>`, for example, you'll get exactly the same chunks from the pool. Reuse = 0 traffic for GC.
