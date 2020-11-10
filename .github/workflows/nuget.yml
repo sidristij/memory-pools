@@ -2,7 +2,7 @@ name: nuget
 
 on:
   push:
-    branches: [ master ]
+    branches: [ release ]
 
 jobs:
   build:
