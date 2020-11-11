@@ -3,7 +3,7 @@
 
 # Memory pools
 
-Contains 2 groups of API. The first one is basic API for pooling any type of objects (who can be created via default ctor) and buffers (IMemoryOwner<T> with incoming links countdown mechanism).
+Contains 2 groups of API. The first one is basic API for pooling any type of objects (who can be created via default ctor) and buffers (IMemoryOwner<T> with incoming links countdown mechanism). The second one - collections and LINQ without traffic allocations.
 
 ## Basic API
 
