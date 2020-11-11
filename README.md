@@ -1,3 +1,6 @@
+![Project Build](https://github.com/sidristij/memory-pools/workflows/.NET%20Core/badge.svg)
+[![Nuget](https://img.shields.io/nuget/v/MemoryPools?logo=MemoryPools)](https://www.nuget.org/packages/MemoryPools/)
+
 # Memory pools
 
 Contains 2 groups of API. The first one is basic API for pooling any type of objects (who can be created via default ctor) and buffers (IMemoryOwner<T> with incoming links countdown mechanism).
