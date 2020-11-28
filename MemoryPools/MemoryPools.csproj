@@ -3,7 +3,7 @@
     <PropertyGroup>
         <Product>MemoryPools</Product>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-        <TargetFrameworks>netstandard2.0;netstandard2.1;netcoreapp3.1;netcoreapp5.0</TargetFrameworks>
+        <TargetFrameworks>netstandard2.0;netstandard2.1;netcoreapp3.1</TargetFrameworks>
         <Authors>Stanislav Sidristij</Authors>
         <Version>1.1.0.1</Version>
         <LangVersion>latestmajor</LangVersion>
