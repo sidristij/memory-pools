@@ -20,7 +20,7 @@ namespace MemoryPools.Collections.Specialized.Helpers
         // hashtable operations such as add.  Having a prime guarantees that double 
         // hashing does not lead to infinite loops.  IE, your hash function will be 
         // h1(key) + i*h2(key), 0 <= i < size.  h2 and the size must be relatively prime.
-        public static readonly int[] primes =
+        public static readonly int[] Primes =
         {
             3, 7, 11, 17, 23, 29, 37, 47, 59, 71, 89, 107, 131, 163, 197, 239, 293, 353, 431, 521, 631, 761, 919,
             1103, 1327, 1597, 1931, 2333, 2801, 3371, 4049, 4861, 5839, 7013, 8419, 10103, 12143, 14591,
@@ -29,8 +29,6 @@ namespace MemoryPools.Collections.Specialized.Helpers
             1674319, 2009191, 2411033, 2893249, 3471899, 4166287, 4999559, 5999471, 7199369
         };
 
-
-        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
         public static bool IsPrime(int candidate)
         {
             if ((candidate & 1) != 0)
@@ -48,12 +46,11 @@ namespace MemoryPools.Collections.Specialized.Helpers
             return (candidate == 2);
         }
 
-        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
         public static int GetPrime(int min)
         {
-            for (int i = 0; i < primes.Length; i++)
+            for (int i = 0; i < Primes.Length; i++)
             {
-                int prime = primes[i];
+                int prime = Primes[i];
                 if (prime >= min) return prime;
             }
 
@@ -70,7 +67,7 @@ namespace MemoryPools.Collections.Specialized.Helpers
 
         public static int GetMinPrime()
         {
-            return primes[0];
+            return Primes[0];
         }
 
         // Returns size of hashtable to grow to.

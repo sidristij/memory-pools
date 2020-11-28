@@ -23,7 +23,7 @@ public class Foo
 
 while(true)
 {
-  var instance = Pool.Get<Foo>().Init(100);
+  var instance = InternalObjectsPool<Foo>.Get().Init(100);
   // instance.SomeValue == 100 => true;
   Pool.Return(instance);
 }
@@ -54,7 +54,7 @@ public class Foo : IDisposable
 
 while(true)
 {
-  using var instance = Pool.Get<Foo>().Init(buffer);
+  using var instance = InternalObjectsPool<Foo>.Get().Init(buffer);
   Console.WriteLine(instance.Memory);
 }
 

@@ -19,13 +19,12 @@ namespace MemoryPools.Memory
 		{
 			var realLength = length;
 			var allocLength = length > MinBufferSize ? length : MinBufferSize;
-			var owner = BucketsBasedCrossThreadsArrayPool<T>.Shared.Rent(allocLength);
+			var owner = BucketsBasedCrossThreadsMemoryPool<T>.Shared.Rent(allocLength);
 			return owner.AsCountdown(0, realLength, noDefaultOwner);
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static CountdownMemoryOwner<T> RentFrom<T>(ReadOnlySpan<T> source, bool noDefaultOwner = false)
-			where T : struct
 		{
 			var mem = Rent<T>(source.Length, noDefaultOwner);
 			source.CopyTo(mem.Memory.Span);

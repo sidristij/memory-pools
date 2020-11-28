@@ -7,41 +7,41 @@ namespace MemoryPools.Collections.Specialized
 	{
 		public static IPoolingEnumerable<T> AsSingleEnumerableList<T>(this IEnumerable<T> src)
 		{
-			var list = Pool.Get<PoolingList<T>>().Init();
+			var list = ObjectsPool<PoolingList<T>>.Get().Init();
 			foreach (var item in src)
 			{
 				list.Add(item);
 			}
-			return Pool.Get<EnumerableTyped<T>>().Init(list);
+			return ObjectsPool<EnumerableTyped<T>>.Get().Init(list);
 		}
 		
 		public static IPoolingEnumerable<T> AsSingleEnumerableSharedList<T>(this IEnumerable<T> src) where T : class
 		{
-			var list = Pool.Get<PoolingListCanon<T>>().Init();
+			var list = ObjectsPool<PoolingListCanon<T>>.Get().Init();
 			foreach (var item in src)
 			{
 				list.Add(item);
 			}
-			return Pool.Get<EnumerableShared<T>>().Init(list);
+			return ObjectsPool<EnumerableShared<T>>.Get().Init(list);
 		}
 		public static IPoolingEnumerable<T> AsSingleEnumerableList<T>(this IPoolingEnumerable<T> src)
 		{
-			var list = Pool.Get<PoolingList<T>>().Init();
+			var list = ObjectsPool<PoolingList<T>>.Get().Init();
 			foreach (var item in src)
 			{
 				list.Add(item);
 			}
-			return Pool.Get<EnumerableTyped<T>>().Init(list);
+			return ObjectsPool<EnumerableTyped<T>>.Get().Init(list);
 		}
 		
 		public static IPoolingEnumerable<T> AsSingleEnumerableSharedList<T>(this IPoolingEnumerable<T> src) where T : class
 		{
-			var list = Pool.Get<PoolingListCanon<T>>().Init();
+			var list = ObjectsPool<PoolingListCanon<T>>.Get().Init();
 			foreach (var item in src)
 			{
 				list.Add(item);
 			}
-			return Pool.Get<EnumerableShared<T>>().Init(list);
+			return ObjectsPool<EnumerableShared<T>>.Get().Init(list);
 		}
 	}
 }

@@ -2,9 +2,9 @@
 
     <PropertyGroup>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-        <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
+        <TargetFrameworks>netstandard2.0;netstandard2.1;netcoreapp3.1;netcoreapp5.0</TargetFrameworks>
         <Authors>Stanislav Sidristij</Authors>
-        <LangVersion>8.0</LangVersion>
+        <LangVersion>latestmajor</LangVersion>
         <Nullable>disable</Nullable>
         <Title>Objects pooling, traffic-free collections, non-allocating LINQ</Title>
         <PackageTags>linq, collections, pool</PackageTags>

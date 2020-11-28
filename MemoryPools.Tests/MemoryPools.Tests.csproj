@@ -3,11 +3,13 @@
     <PropertyGroup>
         <TargetFramework>netcoreapp3.0</TargetFramework>
         <RootNamespace>DevTools.Common.Tests</RootNamespace>
-        <LangVersion>latest</LangVersion>
+        <LangVersion>7.3</LangVersion>
         <OutputType>Library</OutputType>
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="BenchmarkDotNet" Version="0.12.1" />
+      <PackageReference Include="BenchmarkDotNet.Diagnostics.Windows" Version="0.12.1" />
       <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.8.0" />
       <PackageReference Include="NUnit" Version="3.12.0" />
       <PackageReference Include="NUnit3TestAdapter" Version="3.17.0" />

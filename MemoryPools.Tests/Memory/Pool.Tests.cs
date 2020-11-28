@@ -1,6 +1,6 @@
 ﻿using System.Linq;
-using MemoryPools;
 using MemoryPools.Collections.Specialized;
+using MemoryPools.Memory;
 using NUnit.Framework;
 
 namespace DevTools.Common.Tests.Memory
@@ -11,7 +11,7 @@ namespace DevTools.Common.Tests.Memory
         [Test]
         public void TestRegularObjectGet()
         {
-            var inst = Pool.Get<Instance>().Init("test");
+            var inst = ObjectsPool<Instance>.Get().Init("test");
             Assert.NotNull(inst);
             Assert.AreEqual("test", inst.Property);
         }        
@@ -19,9 +19,9 @@ namespace DevTools.Common.Tests.Memory
         [Test]
         public void TestGetReturnGetReturnsTheSame()
         {
-            var inst = Pool.Get<Instance>().Init("test");
-            Pool.Return(inst);
-            var second = Pool.Get<Instance>();
+            var inst = ObjectsPool<Instance>.Get().Init("test");
+            ObjectsPool<Instance>.Return(inst);
+            var second = ObjectsPool<Instance>.Get();
             
             Assert.NotNull(second);
             Assert.AreEqual(inst, second);
@@ -32,22 +32,22 @@ namespace DevTools.Common.Tests.Memory
         {
             var list = Enumerable
                 .Range(0, PoolsDefaults.DefaultPoolBucketSize * PoolsDefaults.DefaultPoolBucketSize + 1)
-                .Select((_) => Pool.Get<Instance>().Init("test"))
+                .Select((_) => ObjectsPool<Instance>.Get().Init("test"))
                 .ToList();
 
             foreach (var instance in list)
             {
-                Pool.Return(instance);
+                ObjectsPool<Instance>.Return(instance);
             }
             
             foreach (var _ in list)
             {
-                var x = Pool.Get<Instance>();
+                var x = ObjectsPool<Instance>.Get();
                 Assert.NotNull(x);
                 Assert.AreEqual("test", x.Property);
             }
             
-            var newinst = Pool.Get<Instance>();
+            var newinst = ObjectsPool<Instance>.Get();
             Assert.NotNull(newinst);
             Assert.AreNotEqual("test", newinst.Property);
         }

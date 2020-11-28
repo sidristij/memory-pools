@@ -1,11 +1,13 @@
-﻿namespace MemoryPools.Collections.Specialized
+﻿using MemoryPools.Memory;
+
+namespace MemoryPools.Collections.Specialized
 {
 	internal sealed class PoolingNode<T> : PoolingNodeBase<T>
 	{
 		public override void Dispose()
 		{
 			base.Dispose();
-			Pool.Return(this);
+			ObjectsPool<PoolingNode<T>>.Return(this);
 		}
 
 		public override IPoolingNode<T> Init(int capacity)

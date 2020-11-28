@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using MemoryPools.Collections.Specialized;
+using MemoryPools.Memory;
 
 namespace MemoryPools.Collections.Linq
 {
@@ -18,7 +19,7 @@ namespace MemoryPools.Collections.Linq
         public IPoolingEnumerator<T> GetEnumerator()
         {
             _count++;
-            return Pool.Get<UnionExprEnumerator>().Init(this, _src.GetEnumerator());
+            return ObjectsPool<UnionExprEnumerator>.Get().Init(this, _src.GetEnumerator());
         }
 
         private void Dispose()
@@ -28,10 +29,10 @@ namespace MemoryPools.Collections.Linq
             if (_count == 0)
             {
                 _src?.Dispose();
-                Pool.Return(_src);
+                ObjectsPool<PoolingDictionary<T, int>>.Return(_src);
                 _src = default;
 
-                Pool.Return(this);
+                ObjectsPool<UnionExprEnumerable<T>>.Return(this);
             }
         }
         internal class UnionExprEnumerator : IPoolingEnumerator<T>
@@ -62,7 +63,7 @@ namespace MemoryPools.Collections.Linq
                 _parent?.Dispose();
                 _parent = default;
                 
-                Pool.Return(this);
+                ObjectsPool<UnionExprEnumerator>.Return(this);
             }
         }
         IPoolingEnumerator IPoolingEnumerable.GetEnumerator() => GetEnumerator();

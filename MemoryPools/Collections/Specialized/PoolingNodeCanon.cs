@@ -25,7 +25,7 @@ namespace MemoryPools.Collections.Specialized
 		public override void Dispose()
 		{
 			base.Dispose();
-			Pool.Return(this);
+			ObjectsPool<PoolingNodeCanon<T>>.Return(this);
 		}
 
 		public override IPoolingNode<object> Init(int capacity)
