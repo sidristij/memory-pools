@@ -88,7 +88,7 @@ namespace MemoryPools.Collections.Linq
         // {
         //     using (var e = outer.GetEnumerator())
         //     {
-        //         var dict = Pool.Get<PoolingDictionary<TOuter, TKey>>();
+        //         var dict = InternalObjectsPool<PoolingDictionary<TOuter, TKey>>.Get();
         //         if (e.MoveNext())
         //         {
         //             Lookup<TKey, TInner> lookup = Lookup<TKey, TInner>.CreateForJoin(inner, innerKeySelector, comparer);

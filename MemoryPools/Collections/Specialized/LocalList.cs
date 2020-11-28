@@ -30,8 +30,10 @@ namespace MemoryPools.Collections.Specialized
 				yield break;
 			}
 
-			using var enumerator = _other.GetEnumerator();
-			while (enumerator.MoveNext()) yield return enumerator.Current;
+			using(var enumerator = _other.GetEnumerator())
+			{
+				while (enumerator.MoveNext()) yield return enumerator.Current;
+			}
 		}
 
 		public void Add(T item)

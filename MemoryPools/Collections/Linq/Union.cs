@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using MemoryPools.Collections.Specialized;
+using MemoryPools.Memory;
 
 namespace MemoryPools.Collections.Linq
 {
@@ -7,20 +8,20 @@ namespace MemoryPools.Collections.Linq
     {
         public static IPoolingEnumerable<T> Union<T>(this IPoolingEnumerable<T> source, IPoolingEnumerable<T> second)
         {
-            var set = Pool.Get<PoolingDictionary<T, int>>().Init(0);
+            var set = ObjectsPool<PoolingDictionary<T, int>>.Get().Init(0);
             foreach (var item in source) set[item] = 1;
             foreach (var item in second) set[item] = 1;
             
-            return Pool.Get<UnionExprEnumerable<T>>().Init(set);
+            return ObjectsPool<UnionExprEnumerable<T>>.Get().Init(set);
         } 
         
         public static IPoolingEnumerable<T> Union<T>(this IPoolingEnumerable<T> source, IPoolingEnumerable<T> second, IEqualityComparer<T> comparer)
         {
-            var set = Pool.Get<PoolingDictionary<T, int>>().Init(0, comparer);
+            var set = ObjectsPool<PoolingDictionary<T, int>>.Get().Init(0, comparer);
             foreach (var item in source) set[item] = 1;
             foreach (var item in second) set[item] = 1;
             
-            return Pool.Get<UnionExprEnumerable<T>>().Init(set);
+            return ObjectsPool<UnionExprEnumerable<T>>.Get().Init(set);
         }
     }
 }

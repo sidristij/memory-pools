@@ -13,7 +13,7 @@ namespace MemoryPools.Collections.Specialized
 	{
 		protected override IPoolingNode<T> CreateNodeHolder()
 		{
-			return Pool.Get<PoolingNode<T>>().Init(PoolsDefaults.DefaultPoolBucketSize);
+			return ObjectsPool<PoolingNode<T>>.Get().Init(PoolsDefaults.DefaultPoolBucketSize);
 		}
 	}
 }

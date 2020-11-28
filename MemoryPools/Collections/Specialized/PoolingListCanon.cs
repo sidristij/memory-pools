@@ -1,4 +1,6 @@
-﻿namespace MemoryPools.Collections.Specialized
+﻿using MemoryPools.Memory;
+
+namespace MemoryPools.Collections.Specialized
 {
 	/// <summary>
 	/// 	List of elements (should be disposed to avoid memory traffic). Max size = 128*128 = 16,384 elements.
@@ -18,7 +20,7 @@
 		
 		protected override IPoolingNode<T> CreateNodeHolder()
 		{
-			return (IPoolingNode<T>) Pool.Get<PoolingNodeCanon<T>>().Init(PoolsDefaults.DefaultPoolBucketSize);
+			return (IPoolingNode<T>) ObjectsPool<PoolingNodeCanon<T>>.Get().Init(PoolsDefaults.DefaultPoolBucketSize);
 		}
 	}
 }

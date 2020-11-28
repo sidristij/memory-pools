@@ -19,7 +19,7 @@ namespace MemoryPools.Collections.Specialized
 
 			public IEnumerator<TValue> GetEnumerator()
 			{
-				return Pool.Get<Enumerator>().Init(_src);
+				return ObjectsPool<Enumerator>.Get().Init(_src);
 			}
 
 			IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
@@ -87,7 +87,7 @@ namespace MemoryPools.Collections.Specialized
 				public void Dispose()
 				{
 					_src = default;
-					Pool.Return(this);
+					ObjectsPool<Enumerator>.Return(this);
 				}
 			}
 		}

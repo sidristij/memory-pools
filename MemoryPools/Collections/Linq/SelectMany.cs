@@ -1,4 +1,5 @@
 ﻿using System;
+using MemoryPools.Memory;
 
 namespace MemoryPools.Collections.Linq
 {
@@ -8,7 +9,7 @@ namespace MemoryPools.Collections.Linq
             this IPoolingEnumerable<T> source,
             Func<T, IPoolingEnumerable<TR>> mutator)
         {
-            return Pool.Get<SelectManyExprEnumerable<T, TR>>().Init(source, mutator);
+            return ObjectsPool<SelectManyExprEnumerable<T, TR>>.Get().Init(source, mutator);
         }
 	
         public static IPoolingEnumerable<TR> SelectMany<T, TR, TContext>(
@@ -16,7 +17,7 @@ namespace MemoryPools.Collections.Linq
             TContext context,
             Func<T, TContext, IPoolingEnumerable<TR>> mutator)
         {
-            return Pool.Get<SelectManyExprWithContextEnumerable<T, TR, TContext>>().Init(source, mutator, context);
+            return ObjectsPool<SelectManyExprWithContextEnumerable<T, TR, TContext>>.Get().Init(source, mutator, context);
         }
     }
 }

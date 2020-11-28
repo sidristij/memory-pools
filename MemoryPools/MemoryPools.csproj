@@ -3,10 +3,10 @@
     <PropertyGroup>
         <Product>MemoryPools</Product>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-        <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
+        <TargetFrameworks>netstandard2.0;netstandard2.1;netcoreapp3.1;netcoreapp5.0</TargetFrameworks>
         <Authors>Stanislav Sidristij</Authors>
         <Version>1.1.0.1</Version>
-        <LangVersion>8.0</LangVersion>
+        <LangVersion>latestmajor</LangVersion>
         <Nullable>disable</Nullable>
         <PackageTags>linq;collections;pool;performance</PackageTags>
         <PackageProjectUrl>https://github.com/sidristij/memory-pools</PackageProjectUrl>
@@ -14,6 +14,7 @@
         <RepositoryType>git</RepositoryType>
         <RepositoryUrl>https://github.com/sidristij/memory-pools</RepositoryUrl>
         <Description>Objects pooling, buffers pooling, traffic-free collections (PoolingList, PoolingDictionary, PoolingQueue, PoolingStack), non-allocating LINQ</Description>
+        <PackageVersion>1.1.0.2</PackageVersion>
     </PropertyGroup>
 
     <ItemGroup>

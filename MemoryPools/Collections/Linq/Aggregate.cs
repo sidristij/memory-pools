@@ -16,20 +16,20 @@ namespace MemoryPools.Collections.Linq
                 throw new ArgumentNullException(nameof(func));
             }
 
-            using var enumerator = source.GetEnumerator();
-            
-            if (!enumerator.MoveNext())
+            using (var enumerator = source.GetEnumerator())
             {
-                throw new InvalidOperationException("Sequence contains no elements");
-            }
+                if (!enumerator.MoveNext())
+                {
+                    throw new InvalidOperationException("Sequence contains no elements");
+                }
 
-            var result = enumerator.Current;
-            while (enumerator.MoveNext())
-            {
-                result = func(result, enumerator.Current);
+                var result = enumerator.Current;
+                while (enumerator.MoveNext())
+                {
+                    result = func(result, enumerator.Current);
+                }
+                return result;
             }
-
-            return result;
         }
 
         public static TAccumulate Aggregate<TSource, TAccumulate>(this IPoolingEnumerable<TSource> source, TAccumulate seed, Func<TAccumulate, TSource, TAccumulate> func)

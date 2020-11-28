@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using MemoryPools.Collections.Specialized;
+using MemoryPools.Memory;
 
 namespace MemoryPools.Collections.Linq
 {
@@ -25,7 +26,7 @@ namespace MemoryPools.Collections.Linq
         public IPoolingEnumerator<T> GetEnumerator()
         {
             _count++;
-            return Pool.Get<IntersectExprEnumerator>().Init(this, _src.GetEnumerator(), _comparer);
+            return ObjectsPool<IntersectExprEnumerator>.Get().Init(this, _src.GetEnumerator(), _comparer);
         }
 
         private void Dispose()
@@ -36,10 +37,10 @@ namespace MemoryPools.Collections.Linq
             {
                 _src = default;
                 _second?.Dispose();
-                Pool.Return(_second);
+                ObjectsPool<PoolingDictionary<T, int>>.Return(_second);
 
                 _second = default;
-                Pool.Return(this);
+                ObjectsPool<IntersectExprEnumerable<T>>.Return(this);
             }
         }
         
@@ -53,7 +54,7 @@ namespace MemoryPools.Collections.Linq
             {
                 _src = src;
                 _parent = parent;
-                _alreadyDoneItems = Pool.Get<PoolingDictionary<T, int>>().Init(0, comparer);
+                _alreadyDoneItems = ObjectsPool<PoolingDictionary<T, int>>.Get().Init(0, comparer);
                 return this;
             }
 
@@ -84,13 +85,13 @@ namespace MemoryPools.Collections.Linq
                 _src = null;
                 
                 _alreadyDoneItems?.Dispose();
-                Pool.Return(_alreadyDoneItems);
+                ObjectsPool<PoolingDictionary<T, int>>.Return(_alreadyDoneItems);
                 _alreadyDoneItems = default;
                 
                 _parent?.Dispose();
                 _parent = default;
                 
-                Pool.Return(this);
+                ObjectsPool<IntersectExprEnumerator>.Return(this);
             }
         }
         IPoolingEnumerator IPoolingEnumerable.GetEnumerator() => GetEnumerator();

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Buffers;
+using System.Runtime.CompilerServices;
 
 namespace MemoryPools.Memory.Pooling
 {
@@ -29,45 +30,21 @@ namespace MemoryPools.Memory.Pooling
 	///  }
 	/// 	#endif
 	///  </code>
-	public class BucketsBasedCrossThreadsMemoryPool<T> : MemoryPool<T>
+	public sealed class BucketsBasedCrossThreadsMemoryPool<T>
 	{
 		private BucketsBasedCrossThreadsArrayPool<T> _pool;
 
+		[ThreadStatic]
+		private static BucketsBasedCrossThreadsMemoryPool<T> _mempool;
+
 		internal BucketsBasedCrossThreadsArrayPool<T> _arraysPool => _pool ??= new BucketsBasedCrossThreadsArrayPool<T>();
 
-		public override int MaxBufferSize => Utilities.GetMaxSizeForBucket(17);
+		public static BucketsBasedCrossThreadsMemoryPool<T> Shared => _mempool ??= new BucketsBasedCrossThreadsMemoryPool<T>();
 
-		protected override void Dispose(bool disposing)
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public CountdownMemoryOwner<T> Rent(int minBufferSize = -1)
 		{
-			;
-		}
-
-		public override IMemoryOwner<T> Rent(int minBufferSize = -1)
-		{
-			return Pool.Get<BufferHolder>().Init(_arraysPool.Rent(minBufferSize), this);
-		}
-
-		private class BufferHolder : IMemoryOwner<T>
-		{
-			private T[] _arr;
-			private BucketsBasedCrossThreadsMemoryPool<T> _that;
-
-			public void Dispose()
-			{
-				_that._arraysPool.Return(_arr);
-				_that = null;
-				_arr = null;
-				Pool.Return(this);
-			}
-
-			public Memory<T> Memory => _arr.AsMemory();
-
-			public BufferHolder Init(T[] arr, BucketsBasedCrossThreadsMemoryPool<T> that)
-			{
-				_arr = arr;
-				_that = that;
-				return this;
-			}
+			return ObjectsPool<CountdownMemoryOwner<T>>.Get().Init(_arraysPool.Rent(minBufferSize), minBufferSize);
 		}
 	}
 }

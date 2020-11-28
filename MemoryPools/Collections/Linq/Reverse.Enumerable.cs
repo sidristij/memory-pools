@@ -1,4 +1,5 @@
 ﻿using MemoryPools.Collections.Specialized;
+using MemoryPools.Memory;
 
 namespace MemoryPools.Collections.Linq
 {
@@ -17,7 +18,7 @@ namespace MemoryPools.Collections.Linq
         public IPoolingEnumerator<T> GetEnumerator()
         {
             _count++;
-            return Pool.Get<ReverseExprEnumerator>().Init(_src, this);
+            return ObjectsPool<ReverseExprEnumerator>.Get().Init(_src, this);
         }
 
         private void Dispose()
@@ -27,9 +28,9 @@ namespace MemoryPools.Collections.Linq
             if (_count == 0)
             {
                 _src?.Dispose();
-                Pool.Return(_src);
+                ObjectsPool<PoolingList<T>>.Return(_src);
                 _src = default;
-                Pool.Return(this);
+                ObjectsPool<ReverseExprEnumerable<T>>.Return(this);
             }
         }
 
@@ -67,7 +68,7 @@ namespace MemoryPools.Collections.Linq
                 _src = default;
                 _position = default;
                 
-                Pool.Return(this);
+                ObjectsPool<ReverseExprEnumerator>.Return(this);
             }
         }
 

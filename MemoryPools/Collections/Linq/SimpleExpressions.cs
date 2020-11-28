@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
+using MemoryPools.Memory;
 
 namespace MemoryPools.Collections.Linq
 {
@@ -10,12 +11,12 @@ namespace MemoryPools.Collections.Linq
 
 		public static IPoolingEnumerable<int> Range(int startIndex, int count)
         {
-            return Pool.Get<RangeExprEnumerable>().Init(startIndex, count);
+            return ObjectsPool<RangeExprEnumerable>.Get().Init(startIndex, count);
         }
 
         public static IPoolingEnumerable<int> Range(int count)
         {
-            return Pool.Get<RangeExprEnumerable>().Init(0, count);
+            return ObjectsPool<RangeExprEnumerable>.Get().Init(0, count);
         }
 
         public static IPoolingEnumerable<T> Repeat<T>(T element, int count) => Range(0, count).Select(element, (item, x) => item);
@@ -65,20 +66,22 @@ namespace MemoryPools.Collections.Linq
         public static bool SequenceEqual<T>(this IPoolingEnumerable<T> self, IPoolingEnumerable<T> other)
         {
 	        var comparer = EqualityComparer<T>.Default;
-	        using var left = self.GetEnumerator();
-	        using var right = other.GetEnumerator();
-	        bool equals, leftHas, rightHas;
-	        
-	        do
+	        using (var left = self.GetEnumerator())
+	        using (var right = other.GetEnumerator())
 	        {
-		        leftHas = left.MoveNext();
-		        rightHas = right.MoveNext();
-		        equals = comparer.Equals(left.Current, right.Current);
+		        bool equals, leftHas, rightHas;
 		        
-		        if (leftHas != rightHas || !equals) return false;
-	        } while (leftHas && rightHas);
+		        do
+		        {
+			        leftHas = left.MoveNext();
+			        rightHas = right.MoveNext();
+			        equals = comparer.Equals(left.Current, right.Current);
+			        
+			        if (leftHas != rightHas || !equals) return false;
+		        } while (leftHas && rightHas);
 
-	        return !leftHas && !rightHas;
+		        return !leftHas && !rightHas;
+	        }
         }
     }
 
@@ -99,7 +102,7 @@ namespace MemoryPools.Collections.Linq
     		public IPoolingEnumerator<int> GetEnumerator()
     		{
     			_count++;
-    			return Pool.Get<RangeExprEnumerator>().Init(this, _start, _workCount);
+    			return ObjectsPool<RangeExprEnumerator>.Get().Init(this, _start, _workCount);
     		}
     
     		private void Dispose()
@@ -110,7 +113,7 @@ namespace MemoryPools.Collections.Linq
                 {
 	                _start = _workCount = 0;
     				_count = 0;
-    				Pool.Return(this);
+    				ObjectsPool<RangeExprEnumerable>.Return(this);
     			}
     		}
     
@@ -154,7 +157,7 @@ namespace MemoryPools.Collections.Linq
 	                _current = -1;
 	                _parent?.Dispose();
 	                _parent = default;
-    				Pool.Return(this);
+    				ObjectsPool<RangeExprEnumerator>.Return(this);
     			}
     		}
     

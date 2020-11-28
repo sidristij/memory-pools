@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Buffers;
+using MemoryPools.Memory;
 
 namespace MemoryPools.Collections.Specialized
 {
@@ -11,7 +12,7 @@ namespace MemoryPools.Collections.Specialized
 
 		public IPoolingEnumerator<T> GetEnumerator()
 		{
-			return Pool.Get<Enumerator>().Init(this);
+			return ObjectsPool<Enumerator>.Get().Init(this);
 		}
 
 		IPoolingEnumerator IPoolingEnumerable.GetEnumerator()
@@ -307,7 +308,7 @@ namespace MemoryPools.Collections.Specialized
 
 			public void Dispose()
 			{
-				Pool.Return(this);
+				ObjectsPool<Enumerator>.Return(this);
 			}
 		}
 	}

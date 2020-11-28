@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using MemoryPools.Collections.Specialized;
+using MemoryPools.Memory;
 
 namespace MemoryPools.Collections.Linq
 {
@@ -28,7 +29,7 @@ namespace MemoryPools.Collections.Linq
 
         public IPoolingEnumerator<TResult> GetEnumerator()
         {
-            var tmpDict = Pool.Get<PoolingDictionary<TKey, PoolingGrouping>>().Init(0, _comparer);
+            var tmpDict = ObjectsPool<PoolingDictionary<TKey, PoolingGrouping>>.Get().Init(0, _comparer);
             
             PoolingGrouping grp;
             foreach (var item in _source)
@@ -36,14 +37,14 @@ namespace MemoryPools.Collections.Linq
                 var key = _keySelector(item);
                 if (!tmpDict.TryGetValue(key, out grp))
                 {
-                    tmpDict[key] = grp = Pool.Get<PoolingGrouping>().Init(key);
+                    tmpDict[key] = grp = ObjectsPool<PoolingGrouping>.Get().Init(key);
                 }
 
                 grp.InternalList.Add(item);
             }
 
             _count++;
-            return Pool.Get<GroupedResultEnumerator>().Init(this, tmpDict);
+            return ObjectsPool<GroupedResultEnumerator>.Get().Init(this, tmpDict);
         }
 
         private void Dispose()
@@ -56,7 +57,7 @@ namespace MemoryPools.Collections.Linq
                 _comparer = default;
                 _resultSelector = default;
                 _keySelector = default;
-                Pool.Return(this);
+                ObjectsPool<GroupedResultEnumerable<TSource, TKey, TResult>>.Return(this);
             }
         }
         
@@ -84,12 +85,12 @@ namespace MemoryPools.Collections.Linq
                 foreach (var grouping in _src)
                 {
                     grouping.Value.Dispose();
-                    Pool.Return(grouping.Value);
+                    ObjectsPool<PoolingGrouping>.Return(grouping.Value);
                 }
                 
                 // cleanup collection
                 _src?.Dispose();
-                Pool.Return(_src);
+                ObjectsPool<PoolingDictionary<TKey, PoolingGrouping>>.Return(_src);
                 _src = default;
                 
                 _enumerator?.Dispose();
@@ -98,7 +99,7 @@ namespace MemoryPools.Collections.Linq
                 _parent?.Dispose();
                 _parent = default;
                 
-                Pool.Return(this);
+                ObjectsPool<GroupedResultEnumerator>.Return(this);
             }
 
             public bool MoveNext() => _enumerator.MoveNext();
@@ -116,7 +117,7 @@ namespace MemoryPools.Collections.Linq
 
             public PoolingGrouping Init(TKey key)
             {
-                _elements = Pool.Get<PoolingList<TSource>>().Init();
+                _elements = ObjectsPool<PoolingList<TSource>>.Get().Init();
                 Key = key;
                 return this;
             }
@@ -132,7 +133,7 @@ namespace MemoryPools.Collections.Linq
             public void Dispose()
             {
                 _elements?.Dispose();
-                Pool.Return(_elements);
+                ObjectsPool<PoolingList<TSource>>.Return(_elements);
                 _elements = null;
                 
                 Key = default;

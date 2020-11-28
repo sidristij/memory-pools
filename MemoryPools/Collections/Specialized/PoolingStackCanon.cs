@@ -1,4 +1,6 @@
-﻿namespace MemoryPools.Collections.Specialized
+﻿using MemoryPools.Memory;
+
+namespace MemoryPools.Collections.Specialized
 {
 	/// <summary>
 	/// Collection, which is working on shared btw all Pooling* collections buckets
@@ -7,7 +9,7 @@
 	{
 		protected override IPoolingNode<T> CreateNodeHolder()
 		{
-			return (IPoolingNode<T>) Pool.Get<PoolingNodeCanon<T>>().Init(PoolsDefaults.DefaultPoolBucketSize);
+			return (IPoolingNode<T>) ObjectsPool<PoolingNodeCanon<T>>.Get().Init(PoolsDefaults.DefaultPoolBucketSize);
 		}
 	}
 }

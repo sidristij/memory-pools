@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using MemoryPools.Collections.Specialized.Helpers;
+using MemoryPools.Memory;
 
 namespace MemoryPools.Collections.Specialized
 {
@@ -37,8 +38,8 @@ namespace MemoryPools.Collections.Specialized
         private int _count;
         private int _complexity;
         private bool _refType;
-        private ICollection<TKey> _keys;
-        private ICollection<TValue> _values;
+        // private ICollection<TKey> _keys;
+        // private ICollection<TValue> _values;
 
         public PoolingDictionary() => Init(0);
 
@@ -46,12 +47,12 @@ namespace MemoryPools.Collections.Specialized
         {
             _refType = typeof(TKey).IsClass;
             var size = HashHelpers.GetPrime(capacity);
-            _buckets = Pool.Get<PoolingList<int>>().Init();
+            _buckets = ObjectsPool<PoolingList<int>>.Get().Init();
             for (var i = 0; i < size; i++)
             {
                 _buckets.Add(-1);
             }
-            _entries = Pool.Get<PoolingList<Entry>>().Init();
+            _entries = ObjectsPool<PoolingList<Entry>>.Get().Init();
             _freeList = -1;
             _comparer = comparer ?? EqualityComparer<TKey>.Default;
             return this;
@@ -227,10 +228,10 @@ namespace MemoryPools.Collections.Specialized
             }
             
             _buckets?.Dispose();
-            Pool.Return(_buckets);
+            ObjectsPool<PoolingList<int>>.Return(_buckets);
 
             _entries?.Dispose();
-            Pool.Return(_entries);
+            ObjectsPool<PoolingList<Entry>>.Return(_entries);
 
             _buckets = default;
             _entries = default;
@@ -339,12 +340,12 @@ namespace MemoryPools.Collections.Specialized
 
             public void Dispose()
             {
-                Pool.Return(this);
+                ObjectsPool<Enumerator>.Return(this);
             }
         }
 
         public IPoolingEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator() =>
-            Pool.Get<Enumerator>().Init(this);
+            ObjectsPool<Enumerator>.Get().Init(this);
 
         IEnumerator<KeyValuePair<TKey, TValue>> IEnumerable<KeyValuePair<TKey, TValue>>.GetEnumerator() => 
             (IEnumerator<KeyValuePair<TKey, TValue>>)GetEnumerator();

@@ -1,4 +1,6 @@
-﻿namespace MemoryPools.Collections.Linq
+﻿using MemoryPools.Memory;
+
+namespace MemoryPools.Collections.Linq
 {
     internal class OfTypeExprEnumerable<T> : IPoolingEnumerable<T>
     {
@@ -16,7 +18,7 @@
         public IPoolingEnumerator<T> GetEnumerator()
         {
             _count++;
-            return Pool.Get<OfTypeExprEnumerator>().Init(_src.GetEnumerator(), this);
+            return ObjectsPool<OfTypeExprEnumerator>.Get().Init(_src.GetEnumerator(), this);
         }
 
         private void Dispose()
@@ -26,7 +28,7 @@
             if (_count == 0)
             {
                 _src = default;
-                Pool.Return(this);
+                ObjectsPool<OfTypeExprEnumerable<T>>.Return(this);
             }
         }
 
@@ -68,7 +70,7 @@
                 _parent = null;
                 _src?.Dispose();
                 _src = default;
-                Pool.Return(this);
+                ObjectsPool<OfTypeExprEnumerator>.Return(this);
             }
         }
 

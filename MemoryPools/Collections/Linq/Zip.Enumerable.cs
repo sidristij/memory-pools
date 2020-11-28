@@ -1,4 +1,6 @@
-﻿namespace MemoryPools.Collections
+﻿using MemoryPools.Memory;
+
+namespace MemoryPools.Collections
 {
     internal class ZipExprEnumerable<T> : IPoolingEnumerable<(T, T)>
     {
@@ -16,7 +18,7 @@
         public IPoolingEnumerator<(T, T)> GetEnumerator()
         {
             _count++;
-            return Pool.Get<ZipExprEnumerator>().Init(this, _src.GetEnumerator(), _second.GetEnumerator());
+            return ObjectsPool<ZipExprEnumerator>.Get().Init(this, _src.GetEnumerator(), _second.GetEnumerator());
         }
 
         private void Dispose()
@@ -27,7 +29,7 @@
             {
                 _src = default;
                 _second = default;
-                Pool.Return(this);
+                ObjectsPool<ZipExprEnumerable<T>>.Return(this);
             }
         }
 
@@ -71,7 +73,7 @@
                 _src = default;
                 _second?.Dispose();
                 _second = default;
-                Pool.Return(this);
+                ObjectsPool<ZipExprEnumerator>.Return(this);
             }
         }
 
