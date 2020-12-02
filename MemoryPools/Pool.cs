@@ -13,8 +13,5 @@ using MemoryPools.Memory;
 			[MethodImpl(MethodImplOptions.AggressiveInlining)]
 			public static CountdownMemoryOwner<T> GetBufferFrom<T>(ReadOnlySpan<T> source) =>
 				InternalArraysPool.RentFrom(source, false);
-			
-			public static ThreadAwareObjectsPool<T> CreateThreadAwarePool<T>() where T : class, new() => 
-				new ThreadAwareObjectsPool<T>();
 		}
 	}
