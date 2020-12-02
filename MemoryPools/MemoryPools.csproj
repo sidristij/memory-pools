@@ -6,7 +6,7 @@
         <TargetFrameworks>netstandard2.0;netstandard2.1;netcoreapp3.1</TargetFrameworks>
         <Authors>Stanislav Sidristij</Authors>
         <Version>1.1.0.1</Version>
-        <LangVersion>latestmajor</LangVersion>
+        <LangVersion>8</LangVersion>
         <Nullable>disable</Nullable>
         <PackageTags>linq;collections;pool;performance</PackageTags>
         <PackageProjectUrl>https://github.com/sidristij/memory-pools</PackageProjectUrl>
