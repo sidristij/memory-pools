@@ -1,4 +1,4 @@
-name: nuget
+name: MemoryPools
 
 on:
   push:
