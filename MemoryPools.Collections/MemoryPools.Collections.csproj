@@ -6,7 +6,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="MemoryPools" Version="1.1.2i" />
+      <PackageReference Include="MemoryPools" Version="1.1.1" />
     </ItemGroup>
 
 </Project>

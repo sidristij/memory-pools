@@ -1,8 +1,8 @@
 name: MemoryPools.Collections
 
-on:
-  push:
-    branches: [ release ]
+#on:
+#  push:
+#    branches: [ release ]
 
 jobs:
   build:
