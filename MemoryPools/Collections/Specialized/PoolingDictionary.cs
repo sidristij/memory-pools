@@ -38,12 +38,10 @@ namespace MemoryPools.Collections.Specialized
         private int _count;
         private int _complexity;
         private bool _refType;
-        // private ICollection<TKey> _keys;
-        // private ICollection<TValue> _values;
 
-        public PoolingDictionary() => Init(0);
+        public PoolingDictionary() => Init();
 
-        public PoolingDictionary<TKey, TValue> Init(int capacity, IEqualityComparer<TKey> comparer = default)
+        public PoolingDictionary<TKey, TValue> Init(int capacity = 0, IEqualityComparer<TKey> comparer = default)
         {
             _refType = typeof(TKey).IsClass;
             var size = HashHelpers.GetPrime(capacity);

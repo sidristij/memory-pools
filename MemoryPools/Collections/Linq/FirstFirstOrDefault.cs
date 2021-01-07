@@ -47,12 +47,11 @@ namespace MemoryPools.Collections.Linq
             var enumerator = source.GetEnumerator();
             while (enumerator.MoveNext())
             {
-                if (condition(context, enumerator.Current))
-                {
-                    var item = enumerator.Current;
-                    enumerator.Dispose();
-                    return item;
-                }
+                if (!condition(context, enumerator.Current)) continue;
+                
+                var item = enumerator.Current;
+                enumerator.Dispose();
+                return item;
             }
             enumerator.Dispose();
             throw new InvalidOperationException("Sequence is empty");
@@ -80,12 +79,11 @@ namespace MemoryPools.Collections.Linq
             var enumerator = source.GetEnumerator();
             while (enumerator.MoveNext())
             {
-                if (condition(enumerator.Current))
-                {
-                    var elem = enumerator.Current;
-                    enumerator.Dispose();
-                    return elem;
-                }
+                if (!condition(enumerator.Current)) continue;
+                
+                var elem = enumerator.Current;
+                enumerator.Dispose();
+                return elem;
             }
             enumerator.Dispose();
             return default;
@@ -99,12 +97,11 @@ namespace MemoryPools.Collections.Linq
             var enumerator = source.GetEnumerator();
             while (enumerator.MoveNext())
             {
-                if (condition(context, enumerator.Current))
-                {
-                    var elem = enumerator.Current;
-                    enumerator.Dispose();
-                    return elem;
-                }
+                if (!condition(context, enumerator.Current)) continue;
+                
+                var elem = enumerator.Current;
+                enumerator.Dispose();
+                return elem;
             }
             enumerator.Dispose();
             return default;
