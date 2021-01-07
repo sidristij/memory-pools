@@ -10,7 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PerfTests", "PerfTests", "{
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InternalPoolPrefTest", "PerfTests\InternalPoolPrefTest\InternalPoolPrefTest.csproj", "{FB623B65-BC4A-4243-8A1D-6CE054B4C761}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MemoryPools.Linq", "MemoryPools.Linq\MemoryPools.Linq.csproj", "{5914CFA8-C282-445A-BE42-3D5C44EF2F75}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MemoryPools.Collections", "MemoryPools.Collections\MemoryPools.Collections.csproj", "{5914CFA8-C282-445A-BE42-3D5C44EF2F75}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
