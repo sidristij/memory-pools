@@ -10,6 +10,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PerfTests", "PerfTests", "{
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InternalPoolPrefTest", "PerfTests\InternalPoolPrefTest\InternalPoolPrefTest.csproj", "{FB623B65-BC4A-4243-8A1D-6CE054B4C761}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MemoryPools.Linq", "MemoryPools.Linq\MemoryPools.Linq.csproj", "{5914CFA8-C282-445A-BE42-3D5C44EF2F75}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,6 +34,10 @@ Global
 		{FB623B65-BC4A-4243-8A1D-6CE054B4C761}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FB623B65-BC4A-4243-8A1D-6CE054B4C761}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FB623B65-BC4A-4243-8A1D-6CE054B4C761}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5914CFA8-C282-445A-BE42-3D5C44EF2F75}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5914CFA8-C282-445A-BE42-3D5C44EF2F75}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5914CFA8-C282-445A-BE42-3D5C44EF2F75}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5914CFA8-C282-445A-BE42-3D5C44EF2F75}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{FB623B65-BC4A-4243-8A1D-6CE054B4C761} = {D942D43B-F138-4F4C-B3F8-13AC5E01827A}

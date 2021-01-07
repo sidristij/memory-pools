@@ -1,18 +1,21 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using MemoryPools.Collections.Specialized;
 using MemoryPools.Memory;
 
 namespace MemoryPools.Collections.Linq
 {
-    internal class DistinctExprEnumerable<T> : IPoolingEnumerable<T>
+    internal class DistinctExprEnumerable<T, TItem> : IPoolingEnumerable<T>
     {
         private int _count;
         private IPoolingEnumerator<T> _parent;
-        private IEqualityComparer<T> _comparer;
+        private IEqualityComparer<TItem> _comparer;
+        private Func<T, TItem> _selector;
 
-        public DistinctExprEnumerable<T> Init(IPoolingEnumerator<T> parent, IEqualityComparer<T> comparer  = default)
+        public DistinctExprEnumerable<T, TItem> Init(IPoolingEnumerator<T> parent, Func<T, TItem> selector, IEqualityComparer<TItem> comparer  = default)
         {
             _parent = parent;
+            _selector = selector;
             _comparer = comparer;
             _count = 0;
             return this;
@@ -21,7 +24,7 @@ namespace MemoryPools.Collections.Linq
         public IPoolingEnumerator<T> GetEnumerator()
         {
             _count++;
-            return ObjectsPool<DistinctExprEnumerator>.Get().Init(this, _parent, _comparer);
+            return ObjectsPool<DistinctExprEnumerator>.Get().Init(this, _parent, _selector, _comparer);
         }
 
         private void Dispose()
@@ -32,23 +35,27 @@ namespace MemoryPools.Collections.Linq
             {
                 _parent?.Dispose();
                 _parent = default;
-                ObjectsPool<DistinctExprEnumerable<T>>.Return(this);
+                _selector = default;
+                ObjectsPool<DistinctExprEnumerable<T, TItem>>.Return(this);
             }
         }
         internal class DistinctExprEnumerator : IPoolingEnumerator<T>
         {
             private IPoolingEnumerator<T> _src;
-            private PoolingDictionary<T, int> _hashset;
-            private DistinctExprEnumerable<T> _parent;
+            private Func<T, TItem> _selector;
+            private PoolingDictionary<TItem, int> _hashset;
+            private DistinctExprEnumerable<T, TItem> _parent;
             
             public DistinctExprEnumerator Init(
-                DistinctExprEnumerable<T> parent,
+                DistinctExprEnumerable<T, TItem> parent,
                 IPoolingEnumerator<T> src,
-                IEqualityComparer<T> comparer)
+                Func<T, TItem> selector,
+                IEqualityComparer<TItem> comparer)
             {
                 _src = src;
                 _parent = parent;
-                _hashset = ObjectsPool<PoolingDictionary<T, int>>.Get().Init(0, comparer ?? EqualityComparer<T>.Default);
+                _selector = selector;
+                _hashset = ObjectsPool<PoolingDictionary<TItem, int>>.Get().Init(0, comparer ?? EqualityComparer<TItem>.Default);
                 return this;
             }
 
@@ -56,9 +63,10 @@ namespace MemoryPools.Collections.Linq
             {
                 while (_src.MoveNext())
                 {
-                    if(_hashset.ContainsKey(_src.Current)) continue;
+                    var key = _selector(_src.Current);
+                    if(_hashset.ContainsKey(key)) continue;
 
-                    _hashset[_src.Current] = 1;
+                    _hashset[key] = 1;
                     return true;
                 }
 
@@ -80,6 +88,7 @@ namespace MemoryPools.Collections.Linq
                 _hashset = default;
                 
                 _src = default;
+                _selector = default;
                 ObjectsPool<DistinctExprEnumerator>.Return(this);
             }
         }

@@ -6,6 +6,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\MemoryPools.Linq\MemoryPools.Linq.csproj" />
       <ProjectReference Include="..\MemoryPools\MemoryPools.csproj" />
     </ItemGroup>
 

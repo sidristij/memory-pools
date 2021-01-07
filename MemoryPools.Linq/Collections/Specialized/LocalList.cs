@@ -253,7 +253,7 @@ namespace MemoryPools.Collections.Specialized
 
 		public override int GetHashCode()
 		{
-			return new Hasher {_items, _other};
+			return HashCode.Combine(_items, _other);
 		}
 
 		public override bool Equals(object obj)

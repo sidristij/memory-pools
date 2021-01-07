@@ -123,7 +123,7 @@ namespace MemoryPools.Collections.Specialized
 
 		public override int GetHashCode()
 		{
-			return new Hasher {_items};
+			return _items.GetHashCode();
 		}
 
 		public override bool Equals(object obj)
