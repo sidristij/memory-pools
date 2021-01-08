@@ -5,7 +5,7 @@
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <TargetFrameworks>netstandard2.0;netstandard2.1;netcoreapp3.1</TargetFrameworks>
         <Authors>Stanislav Sidristij</Authors>
-        <Version>1.1.3.0</Version>
+        <Version>1.1.3.1</Version>
         <LangVersion>8</LangVersion>
         <Nullable>disable</Nullable>
         <PackageTags>linq;collections;pool;performance</PackageTags>
@@ -14,120 +14,12 @@
         <RepositoryType>git</RepositoryType>
         <RepositoryUrl>https://github.com/sidristij/memory-pools</RepositoryUrl>
         <Description>Objects pooling, buffers pooling, traffic-free collections (PoolingList, PoolingDictionary, PoolingQueue, PoolingStack), non-allocating LINQ</Description>
-        <PackageVersion>1.1.3.0</PackageVersion>
+        <PackageVersion>1.1.3.1</PackageVersion>
     </PropertyGroup>
 
     <ItemGroup>
       <PackageReference Include="Microsoft.Extensions.ObjectPool" Version="5.0.0" />
       <PackageReference Include="System.Memory" Version="4.5.4" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Compile Update="Collections\Specialized\PoolingNodeCanon.cs">
-        <DependentUpon>PoolingNodeBase.cs</DependentUpon>
-      </Compile>
-      <Compile Update="Collections\Specialized\PoolingNode.cs">
-        <DependentUpon>PoolingNodeBase.cs</DependentUpon>
-      </Compile>
-      <Compile Update="Collections\Specialized\IPoolingNode.cs">
-        <DependentUpon>PoolingNodeBase.cs</DependentUpon>
-      </Compile>
-      <Compile Update="Collections\Specialized\PoolingQueueRef.cs">
-        <DependentUpon>PoolingQueue.cs</DependentUpon>
-      </Compile>
-      <Compile Update="Collections\Specialized\PoolingQueueVal.cs">
-        <DependentUpon>PoolingQueue.cs</DependentUpon>
-      </Compile>
-      <Compile Update="Collections\Specialized\PoolingDictionary.KeysCollection.cs">
-        <DependentUpon>PoolingDictionary.cs</DependentUpon>
-      </Compile>
-      <Compile Update="Collections\Specialized\PoolingDictionary.ValuesCollection.cs">
-        <DependentUpon>PoolingDictionary.cs</DependentUpon>
-      </Compile>
-      <Compile Update="Collections\Specialized\AsSingleQueryList.EnumerableRef.cs">
-        <DependentUpon>PoolingList.SingleQuery.cs</DependentUpon>
-      </Compile>
-      <Compile Update="Collections\Specialized\AsSingleQueryList.EnumerableVal.cs">
-        <DependentUpon>PoolingList.SingleQuery.cs</DependentUpon>
-      </Compile>
-      <Compile Update="Collections\Linq\Where.WithContextEnumerable.cs">
-        <DependentUpon>Where.cs</DependentUpon>
-      </Compile>
-      <Compile Update="Collections\Linq\Where.Enumerable.cs">
-        <DependentUpon>Where.cs</DependentUpon>
-      </Compile>
-      <Compile Update="Collections\Linq\Select.Enumerable.cs">
-        <DependentUpon>Select.cs</DependentUpon>
-      </Compile>
-      <Compile Update="Collections\Linq\Select.WithContextEnumerable.cs">
-        <DependentUpon>Select.cs</DependentUpon>
-      </Compile>
-      <Compile Update="Collections\Linq\Cast.Enumerable.cs">
-        <DependentUpon>Cast.cs</DependentUpon>
-      </Compile>
-      <Compile Update="Collections\Linq\OfType.Enumerable.cs">
-        <DependentUpon>OfType.cs</DependentUpon>
-      </Compile>
-      <Compile Update="Collections\Linq\Prepend.Enumerable.cs">
-        <DependentUpon>AppendPrepend.cs</DependentUpon>
-      </Compile>
-      <Compile Update="Collections\Linq\Append.Enumerable.cs">
-        <DependentUpon>AppendPrepend.cs</DependentUpon>
-      </Compile>
-      <Compile Update="Collections\Linq\Zip.Enumerable.cs">
-        <DependentUpon>Zip.cs</DependentUpon>
-      </Compile>
-      <Compile Update="Collections\Linq\Concat.Enumerable.cs">
-        <DependentUpon>Concat.cs</DependentUpon>
-      </Compile>
-      <Compile Update="Collections\Linq\SelectMany.ExprEnumerable.cs">
-        <DependentUpon>SelectMany.cs</DependentUpon>
-      </Compile>
-      <Compile Update="Collections\Linq\SelectMany.ExprWithContextEnumerable.cs">
-        <DependentUpon>SelectMany.cs</DependentUpon>
-      </Compile>
-      <Compile Update="Collections\Linq\SkipTake.ExprPoolingEnumerable.cs">
-        <DependentUpon>SkipTake.cs</DependentUpon>
-      </Compile>
-      <Compile Update="Collections\Specialized\PoolingList.cs">
-        <DependentUpon>PoolingListBase.cs</DependentUpon>
-      </Compile>
-      <Compile Update="Collections\Specialized\PoolingListCanon.cs">
-        <DependentUpon>PoolingListBase.cs</DependentUpon>
-      </Compile>
-      <Compile Update="Collections\Specialized\PoolingStack.cs">
-        <DependentUpon>PoolingStackBase.cs</DependentUpon>
-      </Compile>
-      <Compile Update="Collections\Specialized\PoolingStackCanon.cs">
-        <DependentUpon>PoolingStackBase.cs</DependentUpon>
-      </Compile>
-      <Compile Update="Collections\Linq\Reverse.Enumerable.cs">
-        <DependentUpon>Reverse.cs</DependentUpon>
-      </Compile>
-      <Compile Update="Collections\Linq\Distinct.Enumerable.cs">
-        <DependentUpon>Distinct.cs</DependentUpon>
-      </Compile>
-      <Compile Update="Collections\Linq\Except.Enumerable.cs">
-        <DependentUpon>Except.cs</DependentUpon>
-      </Compile>
-      <Compile Update="Collections\Linq\Intersect.Enumerable.cs">
-        <DependentUpon>Intersect.cs</DependentUpon>
-      </Compile>
-      <Compile Update="Collections\Linq\Union.Enumerable.cs">
-        <DependentUpon>Union.cs</DependentUpon>
-      </Compile>
-      <Compile Update="Collections\Linq\GroupBy.Enumerable.cs">
-        <DependentUpon>GroupBy.cs</DependentUpon>
-      </Compile>
-      <Compile Update="Collections\Linq\GroupBy.ResultEnumerable.cs">
-        <DependentUpon>GroupBy.cs</DependentUpon>
-      </Compile>
-    </ItemGroup>
-
-    <ItemGroup>
-      <Content Include="..\README.md">
-        <Link>README.md</Link>
-      </Content>
     </ItemGroup>
 
 </Project>
