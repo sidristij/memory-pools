@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using MemoryPools.Collections.Specialized;
-
-namespace MemoryPools.Collections.Linq
+﻿namespace MemoryPools.Collections.Linq
 {
     public static partial class PoolingEnumerable
     {
@@ -88,7 +83,7 @@ namespace MemoryPools.Collections.Linq
         // {
         //     using (var e = outer.GetEnumerator())
         //     {
-        //         var dict = InternalObjectsPool<PoolingDictionary<TOuter, TKey>>.Get();
+        //         var dict = InternalPool<PoolingDictionary<TOuter, TKey>>.Get();
         //         if (e.MoveNext())
         //         {
         //             Lookup<TKey, TInner> lookup = Lookup<TKey, TInner>.CreateForJoin(inner, innerKeySelector, comparer);

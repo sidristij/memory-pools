@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
-using System.Runtime.ConstrainedExecution;
 
 namespace MemoryPools.Collections.Specialized.Helpers
 {

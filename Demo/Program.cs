@@ -17,16 +17,16 @@ namespace Demo
 
         static void SimplePooling()
         {
-            var item = ObjectsPool<PoolingItem>.Get().Init(123);
+            var item = Pool<PoolingItem>.Get().Init(123);
 
-            ObjectsPool<PoolingItem>.Return(item);
+            Pool<PoolingItem>.Return(item);
         }
 
         static void ComplexPooling()
         {
             var buf = Pool.GetBuffer<int>(1024);
             
-            using (var item = ObjectsPool<ComplexPoolingItem>.Get().Init(buf))
+            using (var item = Pool<ComplexPoolingItem>.Get().Init(buf))
             {
                 // ...
             }

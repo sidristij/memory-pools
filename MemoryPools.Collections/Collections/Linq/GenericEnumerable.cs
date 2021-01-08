@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using MemoryPools.Memory;
 
 namespace MemoryPools.Collections.Linq
 {
@@ -18,8 +17,8 @@ namespace MemoryPools.Collections.Linq
 		{
 			var enumerator = _enumerable.GetEnumerator();
 			_enumerable = default;
-			ObjectsPool<GenericPoolingEnumerable<T>>.Return(this);
-			return ObjectsPool<GenericPoolingEnumerator<T>>.Get().Init(enumerator);
+			Pool<GenericPoolingEnumerable<T>>.Return(this);
+			return Pool<GenericPoolingEnumerator<T>>.Get().Init(enumerator);
 		}
 
 		IPoolingEnumerator IPoolingEnumerable.GetEnumerator()
@@ -41,8 +40,8 @@ namespace MemoryPools.Collections.Linq
 		{
 			var enumerator = _enumerable.GetEnumerator();
 			_enumerable = default;
-			ObjectsPool<GenericEnumerable<T>>.Return(this);
-			return ObjectsPool<GenericEnumerator<T>>.Get().Init(enumerator);
+			Pool<GenericEnumerable<T>>.Return(this);
+			return Pool<GenericEnumerator<T>>.Get().Init(enumerator);
 		}
 
 		IEnumerator IEnumerable.GetEnumerator()

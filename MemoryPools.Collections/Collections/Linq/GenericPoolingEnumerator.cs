@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using MemoryPools.Memory;
 
 namespace MemoryPools.Collections.Linq
 {
@@ -26,7 +25,7 @@ namespace MemoryPools.Collections.Linq
 		{
 			_source.Dispose();
 			_source = default;
-			ObjectsPool<GenericPoolingEnumerator<T>>.Return(this);
+			Pool<GenericPoolingEnumerator<T>>.Return(this);
 		}
 	}
 
@@ -52,7 +51,7 @@ namespace MemoryPools.Collections.Linq
 		{
 			_source.Dispose();
 			_source = default;
-			ObjectsPool<GenericEnumerator<T>>.Return(this);
+			Pool<GenericEnumerator<T>>.Return(this);
 		}
 	}
 }

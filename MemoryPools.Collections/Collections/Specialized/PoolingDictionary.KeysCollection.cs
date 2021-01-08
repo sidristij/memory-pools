@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using MemoryPools.Memory;
 
 namespace MemoryPools.Collections.Specialized
 {
@@ -19,7 +18,7 @@ namespace MemoryPools.Collections.Specialized
 
 			public IEnumerator<TKey> GetEnumerator()
 			{
-				return ObjectsPool<Enumerator>.Get().Init(_src);
+				return Pool<Enumerator>.Get().Init(_src);
 			}
 
 			IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
@@ -76,7 +75,7 @@ namespace MemoryPools.Collections.Specialized
 				public void Dispose()
 				{
 					_src = default;
-					ObjectsPool<Enumerator>.Return(this);
+					Pool<Enumerator>.Return(this);
 				}
 			}
 		}

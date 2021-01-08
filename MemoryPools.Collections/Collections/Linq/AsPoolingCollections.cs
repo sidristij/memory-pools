@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using MemoryPools.Collections.Specialized;
-using MemoryPools.Memory;
 
 namespace MemoryPools.Collections.Linq
 {
@@ -8,28 +7,28 @@ namespace MemoryPools.Collections.Linq
     {
         public static PoolingList<T> AsPoolingList<T>(this IEnumerable<T> source)
         {
-            var collection = ObjectsPool<PoolingList<T>>.Get().Init();
+            var collection = Pool<PoolingList<T>>.Get().Init();
             collection.AddRange(source);
             return collection;
         }
 
         public static PoolingList<T> AsPoolingList<T>(this IPoolingEnumerable<T> source)
         {
-            var collection = ObjectsPool<PoolingList<T>>.Get().Init();
+            var collection = Pool<PoolingList<T>>.Get().Init();
             collection.AddRange(source);
             return collection;
         }
 
         public static PoolingDictionary<TK, TV> AsPoolingDictionary<TK, TV>(this IEnumerable<KeyValuePair<TK, TV>> source)
         {
-            var collection = ObjectsPool<PoolingDictionary<TK, TV>>.Get().Init();
+            var collection = Pool<PoolingDictionary<TK, TV>>.Get().Init();
             collection.AddRange(source);
             return collection;
         }
 
         public static PoolingDictionary<TK, TV> AsPoolingDictionary<TK, TV>(this IPoolingEnumerable<KeyValuePair<TK, TV>> source)
         {
-            var collection = ObjectsPool<PoolingDictionary<TK, TV>>.Get().Init();
+            var collection = Pool<PoolingDictionary<TK, TV>>.Get().Init();
             collection.AddRange(source);
             return collection;
         }

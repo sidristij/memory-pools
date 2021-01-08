@@ -73,7 +73,7 @@ namespace MemoryPools.Memory
 			{
 				ArrayPool<T>.Shared.Return(_arr);
 			}
-			ObjectsPool<CountdownMemoryOwner<T>>.Return(this);
+			Pool<CountdownMemoryOwner<T>>.Return(this);
 		}
 	}
 }

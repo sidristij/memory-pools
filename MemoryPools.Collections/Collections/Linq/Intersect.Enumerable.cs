@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using MemoryPools.Collections.Specialized;
-using MemoryPools.Memory;
 
 namespace MemoryPools.Collections.Linq
 {
@@ -26,7 +25,7 @@ namespace MemoryPools.Collections.Linq
         public IPoolingEnumerator<T> GetEnumerator()
         {
             _count++;
-            return ObjectsPool<IntersectExprEnumerator>.Get().Init(this, _src.GetEnumerator(), _comparer);
+            return Pool<IntersectExprEnumerator>.Get().Init(this, _src.GetEnumerator(), _comparer);
         }
 
         private void Dispose()
@@ -37,10 +36,10 @@ namespace MemoryPools.Collections.Linq
             {
                 _src = default;
                 _second?.Dispose();
-                ObjectsPool<PoolingDictionary<T, int>>.Return(_second);
+                Pool<PoolingDictionary<T, int>>.Return(_second);
 
                 _second = default;
-                ObjectsPool<IntersectExprEnumerable<T>>.Return(this);
+                Pool<IntersectExprEnumerable<T>>.Return(this);
             }
         }
         
@@ -54,7 +53,7 @@ namespace MemoryPools.Collections.Linq
             {
                 _src = src;
                 _parent = parent;
-                _alreadyDoneItems = ObjectsPool<PoolingDictionary<T, int>>.Get().Init(0, comparer);
+                _alreadyDoneItems = Pool<PoolingDictionary<T, int>>.Get().Init(0, comparer);
                 return this;
             }
 
@@ -85,13 +84,13 @@ namespace MemoryPools.Collections.Linq
                 _src = null;
                 
                 _alreadyDoneItems?.Dispose();
-                ObjectsPool<PoolingDictionary<T, int>>.Return(_alreadyDoneItems);
+                Pool<PoolingDictionary<T, int>>.Return(_alreadyDoneItems);
                 _alreadyDoneItems = default;
                 
                 _parent?.Dispose();
                 _parent = default;
                 
-                ObjectsPool<IntersectExprEnumerator>.Return(this);
+                Pool<IntersectExprEnumerator>.Return(this);
             }
         }
         IPoolingEnumerator IPoolingEnumerable.GetEnumerator() => GetEnumerator();

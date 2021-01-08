@@ -1,6 +1,4 @@
-﻿using MemoryPools.Memory;
-
-namespace MemoryPools.Collections.Specialized
+﻿namespace MemoryPools.Collections.Specialized
 {
 	/// <summary>
 	///     Poolinq queue stores items in buckets of 256 size, who linked with linked list.
@@ -13,7 +11,7 @@ namespace MemoryPools.Collections.Specialized
 	{
 		protected override IPoolingNode<T> CreateNodeHolder()
 		{
-			return ObjectsPool<PoolingNode<T>>.Get().Init(PoolsDefaults.DefaultPoolBucketSize);
+			return Pool<PoolingNode<T>>.Get().Init(PoolsDefaults.DefaultPoolBucketSize);
 		}
 	}
 }

@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading;
-using MemoryPools.Memory;
 
 namespace MemoryPools.Collections.Linq
 {
@@ -11,12 +9,12 @@ namespace MemoryPools.Collections.Linq
 
 		public static IPoolingEnumerable<int> Range(int startIndex, int count)
         {
-            return ObjectsPool<RangeExprEnumerable>.Get().Init(startIndex, count);
+            return Pool<RangeExprEnumerable>.Get().Init(startIndex, count);
         }
 
         public static IPoolingEnumerable<int> Range(int count)
         {
-            return ObjectsPool<RangeExprEnumerable>.Get().Init(0, count);
+            return Pool<RangeExprEnumerable>.Get().Init(0, count);
         }
 
         public static IPoolingEnumerable<T> Repeat<T>(T element, int count) => Range(0, count).Select(element, (item, x) => item);
@@ -102,7 +100,7 @@ namespace MemoryPools.Collections.Linq
     		public IPoolingEnumerator<int> GetEnumerator()
     		{
     			_count++;
-    			return ObjectsPool<RangeExprEnumerator>.Get().Init(this, _start, _workCount);
+    			return Pool<RangeExprEnumerator>.Get().Init(this, _start, _workCount);
     		}
     
     		private void Dispose()
@@ -113,7 +111,7 @@ namespace MemoryPools.Collections.Linq
                 {
 	                _start = _workCount = 0;
     				_count = 0;
-    				ObjectsPool<RangeExprEnumerable>.Return(this);
+    				Pool<RangeExprEnumerable>.Return(this);
     			}
     		}
     
@@ -157,7 +155,7 @@ namespace MemoryPools.Collections.Linq
 	                _current = -1;
 	                _parent?.Dispose();
 	                _parent = default;
-    				ObjectsPool<RangeExprEnumerator>.Return(this);
+    				Pool<RangeExprEnumerator>.Return(this);
     			}
     		}
     

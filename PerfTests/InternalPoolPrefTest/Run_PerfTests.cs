@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Diagnosers;
 using BenchmarkDotNet.Running;
-using MemoryPools.Memory;
+using MemoryPools;
 using Microsoft.Extensions.ObjectPool;
-using MyObjectPool = MemoryPools.Memory.ObjectsPool<InternalPoolPrefTest.PoolItem>;
 
 namespace InternalPoolPrefTest
 {
@@ -19,8 +17,8 @@ namespace InternalPoolPrefTest
 	public class Run_PerfTests
 	{
 		readonly DefaultObjectPool<PoolItem> _mspool = new DefaultObjectPool<PoolItem>(new DefaultPooledObjectPolicy<PoolItem>());
-		readonly JetObjectsPool<PoolItem> _jmypool = new JetObjectsPool<PoolItem>();
-		readonly SuperJetObjectsPool<PoolItem> _sjmypool = new SuperJetObjectsPool<PoolItem>();
+		readonly JetPool<PoolItem> _jmypool = new JetPool<PoolItem>();
+		readonly SuperJetPool<PoolItem> _sjmypool = new SuperJetPool<PoolItem>();
 
 		[Benchmark(Description = "Microsoft.Extensions.ObjectsPool")]
 		public void TestInternalArrayPool_MSObjectsPool()
@@ -31,7 +29,7 @@ namespace InternalPoolPrefTest
 		[Benchmark(Description = "MemoryPooling.ObjectsPool")]
 		public void TestInternalArrayPool_ThreadAwareQueue()
 		{
-			ObjectsPool<PoolItem>.Return(ObjectsPool<PoolItem>.Get());
+			Pool<PoolItem>.Return(Pool<PoolItem>.Get());
 		}
 		
 		[Benchmark(Description = "Own, thread-aware")]
@@ -58,11 +56,11 @@ namespace InternalPoolPrefTest
 		public int x;
 	}
 	
-	public sealed class JetObjectsPool<T> where T : class, new()
+	public sealed class JetPool<T> where T : class, new()
 	{
 		private readonly JetStack<T> _freeObjectsQueue = new JetStack<T>();
 
-		internal JetObjectsPool()
+		internal JetPool()
 		{
 		}
 
@@ -73,11 +71,11 @@ namespace InternalPoolPrefTest
 		public void Return(T instance) => this._freeObjectsQueue.Push(instance);
 	}	
 	
-	public sealed class SuperJetObjectsPool<T> where T : class, new()
+	public sealed class SuperJetPool<T> where T : class, new()
 	{
 		private readonly SuperJetStack<T> _freeObjectsQueue = new SuperJetStack<T>();
 
-		internal SuperJetObjectsPool()
+		internal SuperJetPool()
 		{
 		}
 
