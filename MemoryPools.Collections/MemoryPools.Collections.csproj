@@ -24,4 +24,8 @@
       <ProjectReference Include="..\MemoryPools\MemoryPools.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\MemoryPools\MemoryPools.csproj" />
+    </ItemGroup>
+
 </Project>
