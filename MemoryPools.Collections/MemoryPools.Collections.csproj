@@ -1,8 +1,19 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <RootNamespace>MemoryPools.Linq</RootNamespace>
+        <RootNamespace>MemoryPools.Collections</RootNamespace>
         <TargetFrameworks>netstandard2.0;netstandard2.1;netcoreapp3.1</TargetFrameworks>
+        <Authors>Stanislav Sidristij</Authors>
+        <Version>1.0.0.1</Version>
+        <LangVersion>8</LangVersion>
+        <Nullable>disable</Nullable>
+        <PackageTags>linq;collections;pool;performance</PackageTags>
+        <PackageProjectUrl>https://github.com/sidristij/memory-pools</PackageProjectUrl>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <RepositoryType>git</RepositoryType>
+        <RepositoryUrl>https://github.com/sidristij/memory-pools</RepositoryUrl>
+        <Description>Traffic-free collections (PoolingList, PoolingDictionary, PoolingQueue, PoolingStack), non-allocating LINQ</Description>
+        <PackageVersion>1.0.0.1</PackageVersion>
     </PropertyGroup>
 
     <ItemGroup>
