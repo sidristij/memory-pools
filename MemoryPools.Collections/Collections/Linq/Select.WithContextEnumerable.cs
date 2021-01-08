@@ -1,6 +1,5 @@
 
 using System;
-using MemoryPools.Memory;
 
 namespace MemoryPools.Collections.Linq
 {
@@ -23,7 +22,7 @@ namespace MemoryPools.Collections.Linq
 		public IPoolingEnumerator<TR> GetEnumerator()
 		{
 			_count++;
-			return ObjectsPool<SelectExprWithContextEnumerator>.Get().Init(this, _src.GetEnumerator(), _context, _condition);
+			return Pool<SelectExprWithContextEnumerator>.Get().Init(this, _src.GetEnumerator(), _context, _condition);
 		}
 
 		private void Dispose()
@@ -36,7 +35,7 @@ namespace MemoryPools.Collections.Linq
 				_src = default;
 				_context = default;
 				_condition = default;
-				ObjectsPool<SelectExprWithContextEnumerable<T, TR, TContext>>.Return(this);
+				Pool<SelectExprWithContextEnumerable<T, TR, TContext>>.Return(this);
 			}
 		}
 
@@ -74,7 +73,7 @@ namespace MemoryPools.Collections.Linq
 				_src?.Dispose();
 				_src = default;
 				_context = default;
-				ObjectsPool<SelectExprWithContextEnumerator>.Return(this);
+				Pool<SelectExprWithContextEnumerator>.Return(this);
 			}
 		}
 

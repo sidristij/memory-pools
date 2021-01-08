@@ -1,6 +1,4 @@
-﻿using MemoryPools.Memory;
-
-namespace MemoryPools.Collections.Linq
+﻿namespace MemoryPools.Collections.Linq
 {
     internal sealed class SkipTakeExprPoolingEnumerable<T> : IPoolingEnumerable<T>
     {
@@ -21,7 +19,7 @@ namespace MemoryPools.Collections.Linq
         public IPoolingEnumerator<T> GetEnumerator()
         {
             _count++;
-            return ObjectsPool<SkipTakeExprPoolingEnumerator>.Get().Init(this, _source.GetEnumerator(), _take, _workCount);
+            return Pool<SkipTakeExprPoolingEnumerator>.Get().Init(this, _source.GetEnumerator(), _take, _workCount);
         }
 
         private void Dispose()
@@ -32,7 +30,7 @@ namespace MemoryPools.Collections.Linq
             {
                 _source = null;
                 _take = default;
-                ObjectsPool<SkipTakeExprPoolingEnumerable<T>>.Return(this);
+                Pool<SkipTakeExprPoolingEnumerable<T>>.Return(this);
             }
         }
        
@@ -94,7 +92,7 @@ namespace MemoryPools.Collections.Linq
                 _source?.Dispose();
                 _source = default;
                 
-                ObjectsPool<SkipTakeExprPoolingEnumerator>.Return(this);
+                Pool<SkipTakeExprPoolingEnumerator>.Return(this);
             }
         }
     }

@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using MemoryPools.Collections.Specialized.Helpers;
-using MemoryPools.Memory;
 
 namespace MemoryPools.Collections.Specialized
 {
@@ -45,12 +44,12 @@ namespace MemoryPools.Collections.Specialized
         {
             _refType = typeof(TKey).IsClass;
             var size = HashHelpers.GetPrime(capacity);
-            _buckets = ObjectsPool<PoolingList<int>>.Get().Init();
+            _buckets = Pool<PoolingList<int>>.Get().Init();
             for (var i = 0; i < size; i++)
             {
                 _buckets.Add(-1);
             }
-            _entries = ObjectsPool<PoolingList<Entry>>.Get().Init();
+            _entries = Pool<PoolingList<Entry>>.Get().Init();
             _freeList = -1;
             _comparer = comparer ?? EqualityComparer<TKey>.Default;
             return this;
@@ -83,9 +82,9 @@ namespace MemoryPools.Collections.Specialized
 
         IEnumerable<TValue> IReadOnlyDictionary<TKey, TValue>.Values => Values;
 
-        public ICollection<TKey> Keys => throw new NotImplementedException(); // _keys ??= ObjectsPool<KeysCollection>.Get().Init(this);
+        public ICollection<TKey> Keys => throw new NotImplementedException(); // _keys ??= Pool<KeysCollection>.Get().Init(this);
 
-        public ICollection<TValue> Values => throw new NotImplementedException(); // _values ??= ObjectsPool<ValuesCollection>.Get().Init(this);
+        public ICollection<TValue> Values => throw new NotImplementedException(); // _values ??= Pool<ValuesCollection>.Get().Init(this);
 
         private int FindEntry(TKey key) 
         {
@@ -226,10 +225,10 @@ namespace MemoryPools.Collections.Specialized
             }
             
             _buckets?.Dispose();
-            ObjectsPool<PoolingList<int>>.Return(_buckets);
+            Pool<PoolingList<int>>.Return(_buckets);
 
             _entries?.Dispose();
-            ObjectsPool<PoolingList<Entry>>.Return(_entries);
+            Pool<PoolingList<Entry>>.Return(_entries);
 
             _buckets = default;
             _entries = default;
@@ -338,12 +337,12 @@ namespace MemoryPools.Collections.Specialized
 
             public void Dispose()
             {
-                ObjectsPool<Enumerator>.Return(this);
+                Pool<Enumerator>.Return(this);
             }
         }
 
         public IPoolingEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator() =>
-            ObjectsPool<Enumerator>.Get().Init(this);
+            Pool<Enumerator>.Get().Init(this);
 
         IEnumerator<KeyValuePair<TKey, TValue>> IEnumerable<KeyValuePair<TKey, TValue>>.GetEnumerator() => 
             (IEnumerator<KeyValuePair<TKey, TValue>>)GetEnumerator();

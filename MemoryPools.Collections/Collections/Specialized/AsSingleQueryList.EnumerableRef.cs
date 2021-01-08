@@ -1,6 +1,4 @@
-﻿using MemoryPools.Memory;
-
-namespace MemoryPools.Collections.Specialized
+﻿namespace MemoryPools.Collections.Specialized
 {
 	public static partial class AsSingleQueryList 
 	{
@@ -19,7 +17,7 @@ namespace MemoryPools.Collections.Specialized
 			public IPoolingEnumerator<T> GetEnumerator()
 			{
 				_count++;
-				return ObjectsPool<EnumeratorRef>.Get().Init(this, _src);
+				return Pool<EnumeratorRef>.Get().Init(this, _src);
 			}
 
 			IPoolingEnumerator IPoolingEnumerable.GetEnumerator() => GetEnumerator();
@@ -32,7 +30,7 @@ namespace MemoryPools.Collections.Specialized
 				{
 					_src?.Dispose();
 					_src = default;
-					ObjectsPool<EnumerableShared<T>>.Return(this);
+					Pool<EnumerableShared<T>>.Return(this);
 				}
 			}
 
@@ -64,7 +62,7 @@ namespace MemoryPools.Collections.Specialized
 					_parent?.Dispose();
 					_parent = default;
 					
-					ObjectsPool<EnumeratorRef>.Return(this);
+					Pool<EnumeratorRef>.Return(this);
 				}
 			}
 		}

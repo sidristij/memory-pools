@@ -1,6 +1,4 @@
-﻿using MemoryPools.Memory;
-
-namespace MemoryPools.Collections.Specialized
+﻿namespace MemoryPools.Collections.Specialized
 {
 	public sealed class PoolingList<T> : PoolingListBase<T>
 	{
@@ -15,7 +13,7 @@ namespace MemoryPools.Collections.Specialized
 		
 		protected override IPoolingNode<T> CreateNodeHolder()
 		{
-			return ObjectsPool<PoolingNode<T>>.Get().Init(PoolsDefaults.DefaultPoolBucketSize);
+			return Pool<PoolingNode<T>>.Get().Init(PoolsDefaults.DefaultPoolBucketSize);
 		}
 	}
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using MemoryPools.Memory;
 
 namespace MemoryPools.Collections.Linq
 {
@@ -10,7 +9,7 @@ namespace MemoryPools.Collections.Linq
         /// Returns distinct elements from a sequence by using the default equality comparer to compare values. Complexity - O(N)  
         /// </summary>
         public static IPoolingEnumerable<T> Distinct<T>(this IPoolingEnumerable<T> source) => 
-            ObjectsPool<DistinctExprEnumerable<T, T>>.Get().Init(source.GetEnumerator(), x => x);
+            Pool<DistinctExprEnumerable<T, T>>.Get().Init(source.GetEnumerator(), x => x);
 
         /// <summary>
         /// Returns distinct elements from a sequence by using the default equality comparer to compare values and selector to select key to compare by. Complexity - O(N)  
@@ -18,7 +17,7 @@ namespace MemoryPools.Collections.Linq
         public static IPoolingEnumerable<T> DistinctBy<T, TItem>(
             this IPoolingEnumerable<T> source,
             Func<T, TItem> selector) =>
-            ObjectsPool<DistinctExprEnumerable<T, TItem>>.Get().Init(source.GetEnumerator(), selector);
+            Pool<DistinctExprEnumerable<T, TItem>>.Get().Init(source.GetEnumerator(), selector);
 
         /// <summary>
         /// Returns distinct elements from a sequence by using a specified <paramref name="comparer"/> to compare values. Complexity - O(N)
@@ -26,7 +25,7 @@ namespace MemoryPools.Collections.Linq
         public static IPoolingEnumerable<T> Distinct<T>(
             this IPoolingEnumerable<T> source,
             IEqualityComparer<T> comparer) => 
-            ObjectsPool<DistinctExprEnumerable<T, T>>.Get().Init(source.GetEnumerator(), x => x,comparer);
+            Pool<DistinctExprEnumerable<T, T>>.Get().Init(source.GetEnumerator(), x => x,comparer);
 
         /// <summary>
         /// Returns distinct elements from a sequence by using a specified <paramref name="comparer"/> to compare values and selector to select key to compare by. Complexity - O(N)
@@ -35,6 +34,6 @@ namespace MemoryPools.Collections.Linq
             this IPoolingEnumerable<T> source,
             Func<T, TItem> selector,
             IEqualityComparer<TItem> comparer) => 
-            ObjectsPool<DistinctExprEnumerable<T, TItem>>.Get().Init(source.GetEnumerator(), selector, comparer);
+            Pool<DistinctExprEnumerable<T, TItem>>.Get().Init(source.GetEnumerator(), selector, comparer);
     }
 }

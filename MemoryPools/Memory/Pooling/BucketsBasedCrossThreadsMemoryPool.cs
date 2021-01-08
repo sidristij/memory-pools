@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Buffers;
 using System.Runtime.CompilerServices;
 
 namespace MemoryPools.Memory.Pooling
@@ -44,7 +43,7 @@ namespace MemoryPools.Memory.Pooling
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public CountdownMemoryOwner<T> Rent(int minBufferSize = -1)
 		{
-			return ObjectsPool<CountdownMemoryOwner<T>>.Get().Init(_arraysPool.Rent(minBufferSize), minBufferSize);
+			return Pool<CountdownMemoryOwner<T>>.Get().Init(_arraysPool.Rent(minBufferSize), minBufferSize);
 		}
 	}
 }

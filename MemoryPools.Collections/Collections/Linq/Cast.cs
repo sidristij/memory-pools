@@ -1,6 +1,4 @@
-﻿using MemoryPools.Memory;
-
-namespace MemoryPools.Collections.Linq
+﻿namespace MemoryPools.Collections.Linq
 {
     public static partial class PoolingEnumerable
     {
@@ -10,7 +8,7 @@ namespace MemoryPools.Collections.Linq
         public static IPoolingEnumerable<TR> Cast<TR>(this IPoolingEnumerable source)
         {
 	        if (source is IPoolingEnumerable<TR> res) return res;
-            return ObjectsPool<CastExprEnumerable<TR>>.Get().Init(source);
+            return Pool<CastExprEnumerable<TR>>.Get().Init(source);
         }
     }
 }

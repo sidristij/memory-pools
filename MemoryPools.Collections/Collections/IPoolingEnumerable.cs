@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using MemoryPools.Collections.Linq;
-using MemoryPools.Memory;
 
 namespace MemoryPools.Collections
 {
@@ -16,12 +15,12 @@ namespace MemoryPools.Collections
 	{
 		public static IPoolingEnumerable<T> AsPooling<T>(this IEnumerable<T> source)
 		{
-			return ObjectsPool<GenericPoolingEnumerable<T>>.Get().Init(source);
+			return Pool<GenericPoolingEnumerable<T>>.Get().Init(source);
 		}
 
 		public static IEnumerable<T> AsEnumerable<T>(this IPoolingEnumerable<T> source)
 		{
-			return ObjectsPool<GenericEnumerable<T>>.Get().Init(source);
+			return Pool<GenericEnumerable<T>>.Get().Init(source);
 		}
 	}
 }

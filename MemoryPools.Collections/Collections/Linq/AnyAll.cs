@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using MemoryPools.Collections.Specialized;
 
 namespace MemoryPools.Collections.Linq
 {

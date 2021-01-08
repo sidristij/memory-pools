@@ -1,5 +1,4 @@
 ﻿using MemoryPools.Collections.Specialized;
-using MemoryPools.Memory;
 
 namespace MemoryPools.Collections.Linq
 {
@@ -10,12 +9,12 @@ namespace MemoryPools.Collections.Linq
         /// </summary>
         public static IPoolingEnumerable<T> Reverse<T>(this IPoolingEnumerable<T> source)
         {
-            var list = ObjectsPool<PoolingList<T>>.Get().Init();
+            var list = Pool<PoolingList<T>>.Get().Init();
             foreach (var item in source)
             {
                 list.Add(item);
             }
-            return ObjectsPool<ReverseExprEnumerable<T>>.Get().Init(list);
+            return Pool<ReverseExprEnumerable<T>>.Get().Init(list);
         }
     }
 }

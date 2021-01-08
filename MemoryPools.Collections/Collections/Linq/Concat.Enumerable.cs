@@ -1,6 +1,4 @@
-﻿using MemoryPools.Memory;
-
-namespace MemoryPools.Collections.Linq
+﻿namespace MemoryPools.Collections.Linq
 {
     internal class ConcatExprEnumerable<T> : IPoolingEnumerable<T>
     {
@@ -18,7 +16,7 @@ namespace MemoryPools.Collections.Linq
         public IPoolingEnumerator<T> GetEnumerator()
         {
             _count++;
-            return ObjectsPool<ConcatExprEnumerator>.Get().Init(this, _src.GetEnumerator(), _second.GetEnumerator());
+            return Pool<ConcatExprEnumerator>.Get().Init(this, _src.GetEnumerator(), _second.GetEnumerator());
         }
 
         private void Dispose()
@@ -29,7 +27,7 @@ namespace MemoryPools.Collections.Linq
             {
                 _src = default;
                 _second = default;
-                ObjectsPool<ConcatExprEnumerable<T>>.Return(this);
+                Pool<ConcatExprEnumerable<T>>.Return(this);
             }
         }
 
@@ -83,7 +81,7 @@ namespace MemoryPools.Collections.Linq
                 _src = default;
                 _second?.Dispose();
                 _second = default;
-                ObjectsPool<ConcatExprEnumerator>.Return(this);
+                Pool<ConcatExprEnumerator>.Return(this);
             }
         }
 

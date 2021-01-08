@@ -1,6 +1,4 @@
-﻿using MemoryPools.Memory;
-
-namespace MemoryPools.Collections.Specialized
+﻿namespace MemoryPools.Collections.Specialized
 {
 	internal sealed class PoolingNodeCanon<T> : PoolingNodeBase<object>, IPoolingNode<T> where T : class
 	{
@@ -25,7 +23,7 @@ namespace MemoryPools.Collections.Specialized
 		public override void Dispose()
 		{
 			base.Dispose();
-			ObjectsPool<PoolingNodeCanon<T>>.Return(this);
+			Pool<PoolingNodeCanon<T>>.Return(this);
 		}
 
 		public override IPoolingNode<object> Init(int capacity)
