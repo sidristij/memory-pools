@@ -86,7 +86,7 @@ namespace MemoryPools.Collections.Linq
                 throw new ArgumentNullException(nameof(source));
             }
 
-            using (IPoolingEnumerator<long> e = source.GetEnumerator())
+            using (var e = source.GetEnumerator())
             {
                 if (!e.MoveNext())
                 {
