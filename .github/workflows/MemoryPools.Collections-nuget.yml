@@ -26,4 +26,4 @@ jobs:
       with:
         PROJECT_FILE_PATH: MemoryPools.Collections/MemoryPools.Collections.csproj       
         NUGET_KEY: ${{ secrets.NUGET_API_KEY }}
-        
+        TAG_FORMAT: collections-*        
