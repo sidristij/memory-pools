@@ -1,10 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netcoreapp3.0</TargetFramework>
         <RootNamespace>DevTools.Common.Tests</RootNamespace>
         <LangVersion>8</LangVersion>
         <OutputType>Library</OutputType>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
     </PropertyGroup>
 
     <ItemGroup>

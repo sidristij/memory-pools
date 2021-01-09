@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using MemoryPools.Collections.Specialized;
 
 namespace MemoryPools.Collections.Linq
@@ -21,15 +22,28 @@ namespace MemoryPools.Collections.Linq
 
         public static PoolingDictionary<TK, TV> AsPoolingDictionary<TK, TV>(this IEnumerable<KeyValuePair<TK, TV>> source)
         {
-            var collection = Pool<PoolingDictionary<TK, TV>>.Get().Init();
-            collection.AddRange(source);
-            return collection;
+            return AsPoolingDictionary(source.AsPooling());
         }
 
         public static PoolingDictionary<TK, TV> AsPoolingDictionary<TK, TV>(this IPoolingEnumerable<KeyValuePair<TK, TV>> source)
         {
             var collection = Pool<PoolingDictionary<TK, TV>>.Get().Init();
             collection.AddRange(source);
+            return collection;
+        }
+
+        public static PoolingDictionary<TKey, TValue> AsPoolingDictionary<TSource, TKey, TValue>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector, Func<TSource, TValue> valueSelector)
+        {
+            return AsPoolingDictionary(source.AsPooling(), keySelector, valueSelector);
+        }
+
+        public static PoolingDictionary<TKey, TValue> AsPoolingDictionary<TSource, TKey, TValue>(this IPoolingEnumerable<TSource> source, Func<TSource, TKey> keySelector, Func<TSource, TValue> valueSelector)
+        {
+            var collection = Pool<PoolingDictionary<TKey, TValue>>.Get().Init();
+            collection.AddRange(
+                source
+                    .Select((keySelector, valueSelector), (ctx, x) => new KeyValuePair<TKey, TValue>(ctx.keySelector(x), ctx.valueSelector(x)))
+            );
             return collection;
         }
 

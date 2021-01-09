@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <Product>MemoryPools.Collections</Product>
-        <TargetFrameworks>netstandard2.0;netstandard2.1;netcoreapp3.1</TargetFrameworks>
+        <TargetFrameworks>netcoreapp3.1;netstandard2.1</TargetFrameworks>
         <Authors>Stanislav Sidristij</Authors>
         <Version>1.0.0.2</Version>
         <LangVersion>8</LangVersion>

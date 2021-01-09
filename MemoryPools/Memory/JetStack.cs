@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 
 namespace MemoryPools.Memory
 {
-	public class JetStack<T>
+	internal class JetStack<T>
     {
     	private ObjectWrapper[] _array;
     	
