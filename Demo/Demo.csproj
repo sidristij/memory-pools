@@ -6,8 +6,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\MemoryPools.Collections\MemoryPools.Collections.csproj" />
-      <ProjectReference Include="..\MemoryPools\MemoryPools.csproj" />
+        <ProjectReference Include="..\MemoryPools.Collections\MemoryPools.Collections.csproj" />
     </ItemGroup>
 
 </Project>
