@@ -37,20 +37,25 @@ namespace MemoryPools.Collections.Specialized
         private int _count;
         private int _complexity;
         private bool _refType;
+        private const int EndOfChain = -1; 
 
         public PoolingDictionary() => Init();
 
         public PoolingDictionary<TKey, TValue> Init(int capacity = 0, IEqualityComparer<TKey> comparer = default)
         {
+            if (_buckets != default)
+            {
+                return this;
+            }
             _refType = typeof(TKey).IsClass;
             var size = HashHelpers.GetPrime(capacity);
             _buckets = Pool<PoolingList<int>>.Get().Init();
             for (var i = 0; i < size; i++)
             {
-                _buckets.Add(-1);
+                _buckets.Add(EndOfChain);
             }
             _entries = Pool<PoolingList<Entry>>.Get().Init();
-            _freeList = -1;
+            _freeList = EndOfChain;
             _comparer = comparer ?? EqualityComparer<TKey>.Default;
             return this;
         }
@@ -189,14 +194,17 @@ namespace MemoryPools.Collections.Specialized
  
         private void Resize(int newSize, bool forceNewHashCodes)
         {
-            while(_buckets.Count < newSize) _buckets.Add(-1);
-            while(_entries.Count < newSize) _entries.Add(default);
+            var newBuckets = Pool<PoolingList<int>>.Get().Init();
             
-            if(forceNewHashCodes) 
+            while(newBuckets.Count < newSize) newBuckets.Add(EndOfChain);
+            while(_entries.Count < newSize) _entries.Add(new Entry {hashCode = EndOfChain, next = EndOfChain});
+
+
+            if (forceNewHashCodes)
             {
                 for (var i = 0; i < _count; i++)
                 {
-                    if(_entries[i].hashCode != -1)
+                    if (_entries[i].hashCode != -1)
                     {
                         var entry = _entries[i];
                         entry.hashCode = _entries[i].key.GetHashCode() & 0x7FFFFFFF;
@@ -204,17 +212,19 @@ namespace MemoryPools.Collections.Specialized
                     }
                 }
             }
-            
-            for (var i = 0; i < _count; i++)
-            {
-                if (_entries[i].hashCode < 0) continue;
-                
-                var bucket = _entries[i].hashCode % newSize;
-                var entry = _entries[i];
-                entry.next = _buckets[bucket];
-                _entries[i] = entry;
-                _buckets[bucket] = i;
+
+            for (int i = 0; i < newSize; i++) {
+                if (_entries[i].hashCode >= 0) {
+                    int bucket = _entries[i].hashCode % newSize;
+                    var entry = _entries[i];
+                    entry.next = newBuckets[bucket];
+                    _entries[i] = entry;
+                    newBuckets[bucket] = i;
+                }
             }
+            _buckets.Dispose();
+            Pool<PoolingList<int>>.Return(_buckets);
+            _buckets = newBuckets;
         }
 
         public void Dispose()
