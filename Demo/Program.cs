@@ -1,8 +1,7 @@
 ﻿using System;
+using System.Buffers;
 using System.Linq;
-using MemoryPools;
 using MemoryPools.Collections.Linq;
-using MemoryPools.Memory;
 
 namespace Demo
 {
@@ -86,9 +85,9 @@ namespace Demo
 
     class ComplexPoolingItem : IDisposable
     {
-        private CountdownMemoryOwner<int> _buf;
+        private IMemoryOwner<int> _buf;
 
-        public ComplexPoolingItem Init(CountdownMemoryOwner<int> source)
+        public ComplexPoolingItem Init(IMemoryOwner<int> source)
         {
             _buf = source;
             _buf.AddOwner();
